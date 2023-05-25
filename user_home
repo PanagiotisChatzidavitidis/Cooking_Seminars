@@ -1,0 +1,30 @@
+
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <header>
+        <img src="images/CR_transparent.png" width="200">
+    </header>
+
+    <body>
+        <div class='heading'>Welcome Alex, good to have you back!</div>
+        <div class="topnav">
+            <a class="active" href="user_home.html">Home</a>
+            <a href="about_us.html">About us</a>
+            <a href="cooking_seminars.html">Cooking Seminars</a>
+            <a href="cooking_business.html">Cooking Business Network</a>
+            <a href="forum.html">Forum</a>    
+        </div>
+
+        <div class="heading">You have successfully completed 3 seminars</div>
+ 
+
+        <footer>
+            Copyright
+        </footer>
+        
+    </body>
+</html>
+    
