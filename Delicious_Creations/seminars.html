@@ -1,7 +1,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/style.css?v=<?php echo time(); ?>">
 </head>
 
 
@@ -10,20 +10,19 @@
         <img src="images/CR_transparent.png" width="200">
         <button class="btn btn-sign-out" onclick="location.href='home.html'">Sign Out</button>
     </header>
-
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="user_home.html">Home</a>
+                <a class="nav-link" href="user_home.html">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="about_us.html">About us</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="seminars.html">Seminars</a>
+                <a class="nav-link active" aria-current="page" href="seminars.html">Seminars</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="forum.html">Forum</a>
@@ -40,8 +39,10 @@
           </div>
         </div>
       </nav>
+      
 
     <footer>
+      <script src="js/react.js"></script>
       <div class="container">
         <div class="text-center">
             &copy; Delicious Creations 2023. All Rights Reserved.
