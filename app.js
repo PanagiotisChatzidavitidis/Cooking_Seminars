@@ -1,28 +1,26 @@
-const express = require('express')
-const app = express()
-
+const express = require('express');
+const app = express();
 const mongoose = require('mongoose')
+require('dotenv/config')
 
-const seminarsRoute = require('./routes/seminars');
+const bodyParser = require('body-parser');
+const postRoute = require('./routes/seminars');
 
-// Middleware
-app.use('/seminars', seminarsRoute);
+app.use(bodyParser.json());
+app.use('/seminars', postRoute);
 
-// Create route
 app.get('/', (req, res) => {
   res.send('Homepage');
 });
 
-const MURL = 'mongodb+srv://admin:1234@cluster0.leg7fsv.mongodb.net/Delicious_Creations?retryWrites=true&w=majority';
-
-(async () => {
-  try {
-    await mongoose.connect(MURL);
-    console.log('Your MongoDB connection is established...');
-    app.listen(3001, () => {
+mongoose
+  .connect(process.env.DB_CONNECTOR)
+  .then(() => {
+    console.log('DB is now connected...');
+    app.listen(3000, () => {
       console.log('Server is up and running...');
     });
-  } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
-  }
-})();
+  })
+  .catch((error) => {
+    console.error('Error connecting to DB:', error);
+  });
