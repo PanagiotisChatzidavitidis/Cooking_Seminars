@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import SeminarCard from './SeminarCard';
-import { getSeminarData } from './api'; // Assuming you have an API file to fetch seminar data
+import axios from 'axios';
 
 const Seminars = () => {
   const [seminars, setSeminars] = useState([]);
 
   useEffect(() => {
-    // Fetch seminar data from the API
-    const fetchData = async () => {
+    const fetchSeminars = async () => {
       try {
-        const data = await getSeminarData();
-        setSeminars(data); // Assuming data is an array of seminar objects
+        const response = await axios.get('/seminars'); // Modify the endpoint if needed
+        setSeminars(response.data);
       } catch (error) {
-        console.error('Error fetching seminar data:', error);
+        console.error('Error fetching seminars:', error);
       }
     };
 
-    fetchData();
+    fetchSeminars();
   }, []);
 
   return (
@@ -24,15 +24,7 @@ const Seminars = () => {
       <h1>Seminars</h1>
       {seminars.length > 0 ? (
         seminars.map(seminar => (
-          <SeminarCard
-            key={seminar.id}
-            title={seminar.name}
-            date={seminar.date_start}
-            location={seminar.location}
-            description={seminar.description}
-            seats={seminar.available_seats}
-            difficulty={seminar.difficulty}
-          />
+          <SeminarCard key={seminar._id} seminar={seminar} />
         ))
       ) : (
         <p>No seminars available at the moment.</p>
@@ -41,4 +33,5 @@ const Seminars = () => {
   );
 };
 
-export default Seminars;
+// Render the Seminars component inside the seminarCardsContainer element
+ReactDOM.render(<Seminars />, document.getElementById('seminarCardsContainer'));

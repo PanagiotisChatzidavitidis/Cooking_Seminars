@@ -1,12 +1,14 @@
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose')
-require('dotenv/config')
+const mongoose = require('mongoose');
+require('dotenv/config');
 
 const bodyParser = require('body-parser');
 const postRoute = require('./routes/seminars');
+const cors = require('cors'); // Import the cors middleware
 
 app.use(bodyParser.json());
+app.use(cors()); // Use the cors middleware
 app.use('/seminars', postRoute);
 
 app.get('/', (req, res) => {

@@ -1,0 +1,144 @@
+<html>
+<head>
+    <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css?v=<?php echo time(); ?>">
+    
+</head>
+
+
+<body>
+    <header>
+        <img src="../images/CR_transparent.png" width="200">
+        <button class="btn btn-sign-out" onclick="location.href='home.html'">Sign Out</button>
+    </header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="admin_home.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="admin_seminars.html">Seminars</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="admin_forum.html">Forum</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="admin_cooking_business.html">Bussiness Network</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="user_administration.html">Users</a>
+              </li>
+            </ul>
+            <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit" style="color: white; background-color: transparent; border-color: white;">Search</button>
+            </form>
+
+            
+
+          </div>
+        </div>
+      </nav>
+
+      <form>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="seminar_name">Seminar name</label>
+              <input type="text" class="form-control" id="seminar_name" placeholder="Enter seminar name">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="seminar_date_start">Start date</label>
+              <input type="date" class="form-control" id="seminar_date_start" placeholder="Select start date">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="seminar_date_end">End date</label>
+              <input type="date" class="form-control" id="seminar_date_end" placeholder="Select end date">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="seminar_duration">Duration (in hours)</label>
+              <input type="number" class="form-control" id="seminar_duration" placeholder="Enter seminar duration">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="seminar_description">Description</label>
+              <textarea class="form-control" id="seminar_description" rows="3" placeholder="Enter seminar description"></textarea>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="seminar_capacity">Capacity</label>
+              <input type="number" class="form-control" id="seminar_capacity" placeholder="Enter seminar capacity">
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <button type="button" class="btn btn-sign" onclick="createSeminar()">Create Seminar</button>
+        </div>
+      </form>
+        
+    <footer>
+      <div class="container">
+        <div class="text-center">
+            &copy; Delicious Creations 2023. All Rights Reserved.
+        </div>
+    </div>
+    </footer>
+
+    <!-- Your HTML code -->
+
+<script>
+    function createSeminar() {
+      const seminarName = document.getElementById('seminar_name').value;
+      const startDate = document.getElementById('seminar_date_start').value;
+      const endDate = document.getElementById('seminar_date_end').value;
+      const description = document.getElementById('seminar_description').value;
+      const duration = document.getElementById('seminar_duration').value;
+      const capacity = document.getElementById('seminar_capacity').value;
+  
+      // Prepare the data to be sent to the server
+      const seminarData = {
+        seminar_name: seminarName,
+        seminar_date_start: startDate,
+        seminar_date_end: endDate,
+        seminar_description: description,
+        seminar_duration: duration,
+        seminar_capacity: capacity
+      };
+  
+      fetch('http://localhost:3000/seminars', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(seminarData)
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Seminar created:', data);
+          // You can perform additional actions after creating the seminar
+          // For example, redirect to a success page or update the seminar list
+        })
+        .catch(error => {
+          console.error('Error creating seminar:', error);
+          // Handle the error, display an error message, etc.
+        });
+    }
+  </script>
+    
+  </body>
+  </html>
