@@ -4,12 +4,14 @@ const mongoose = require('mongoose');
 require('dotenv/config');
 
 const bodyParser = require('body-parser');
-const postRoute = require('./routes/seminars');
-const cors = require('cors'); // Import the cors middleware
+const seminarRoute = require('./routes/seminars');
+const userRoute = require('./routes/users');
+const cors = require('cors');
 
 app.use(bodyParser.json());
-app.use(cors()); // Use the cors middleware
-app.use('/seminars', postRoute);
+app.use(cors());
+app.use('/seminars', seminarRoute);
+app.use('/users', userRoute); // Add the user route
 
 app.get('/', (req, res) => {
   res.send('Homepage');

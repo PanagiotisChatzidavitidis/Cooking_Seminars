@@ -2,7 +2,11 @@
 <head>
     <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="../css/style.css?v=<?php echo time(); ?>">
+<<<<<<< HEAD
     <script src="../jquery-3.7.0.min.js"></script>
+=======
+    <script type="text/javascript" scr="jquery-3.7.0.min.js"></script>
+>>>>>>> 36f0d7a866fdaf12510fe9ba3429f7f2a52f826a
     
 </head>
 
@@ -45,6 +49,7 @@
       </nav>
 
       <form>
+        <h2>Create New Seminar</h2>
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
@@ -54,21 +59,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label for="seminar_date_start">Start date</label>
-              <input type="date" class="form-control" id="seminar_date_start" placeholder="Select start date">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="seminar_date_end">End date</label>
-              <input type="date" class="form-control" id="seminar_date_end" placeholder="Select end date">
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="seminar_duration">Duration (in hours)</label>
+              <label for="seminar_duration">Duration </label>
               <input type="number" class="form-control" id="seminar_duration" placeholder="Enter seminar duration">
             </div>
           </div>
@@ -76,14 +67,22 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <label for="seminar_description">Description</label>
-              <textarea class="form-control" id="seminar_description" rows="3" placeholder="Enter seminar description"></textarea>
+              <label for="seminar_date_start">Start date</label>
+              <input type="date" class="form-control" id="seminar_date_start" placeholder="Select start date">
             </div>
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label for="seminar_capacity">Capacity</label>
-              <input type="number" class="form-control" id="seminar_capacity" placeholder="Enter seminar capacity">
+              <label for="seminar_date_end">End date</label>
+              <input type="date" class="form-control" id="seminar_date_end" placeholder="Select end date">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-14">
+            <div class="form-group">
+              <label for="seminar_description">Description</label>
+              <textarea class="form-control" id="seminar_description" rows="3" placeholder="Enter seminar description"></textarea>
             </div>
           </div>
         </div>
@@ -100,7 +99,7 @@
     </div>
     </footer>
 
-    <!-- Your HTML code -->
+
 
 <script>
     function createSeminar() {

@@ -2,10 +2,13 @@
 <head>
     <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="../css/style.css?v=<?php echo time(); ?>">
+<<<<<<< HEAD
     <script src="../jquery-3.7.0.min.js"></script>
     
+=======
+    <script type="text/javascript" scr="jquery-3.7.0.min.js"></script>
+>>>>>>> 36f0d7a866fdaf12510fe9ba3429f7f2a52f826a
 </head>
-
 
 <body>
     <header>
@@ -50,7 +53,7 @@
     </div>
     
     <!-- Card template -->
-    <div class="card" style=" display: none;">
+    <div class="card" style="display: none;">
       <img class="card-img-top" src="..." alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title"></h5>
@@ -59,37 +62,40 @@
         <p class="card-text"></p>
         <p class="card-text"></p>
         <p class="card-text"></p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <p class="card-text"></p>
+        <a href="#" class="btn btn-primary">Join</a>
       </div>
     </div>
-    
+
     <script>
       // Fetch seminar data
       fetch('http://localhost:3000/seminars')
         .then(response => response.json())
         .then(data => {
           const seminarContainer = document.querySelector('.row');
-    
+
           // Create HTML elements to display seminar data
           data.forEach((seminar, index) => {
             const cardTemplate = document.querySelector('.card').cloneNode(true);
             cardTemplate.style.display = 'block'; // Show the cloned card template
-    
+
             // Set seminar data to the card elements
             cardTemplate.querySelector('.card-img-top').src = seminar.image_url;
             cardTemplate.querySelector('.card-title').textContent = seminar.seminar_name;
-            cardTemplate.querySelector('.card-text:nth-of-type(1)').textContent = 'Date start: ' + seminar.seminar_date_start;
-            cardTemplate.querySelector('.card-text:nth-of-type(2)').textContent = 'Date end: ' + seminar.seminar_date_end;
-            cardTemplate.querySelector('.card-text:nth-of-type(3)').textContent = 'Description: ' + seminar.seminar_description;
-            cardTemplate.querySelector('.card-text:nth-of-type(4)').textContent = 'Duration: ' + seminar.seminar_duration + ' days';
-            cardTemplate.querySelector('.card-text:nth-of-type(5)').textContent = 'Capacity: ' + seminar.seminar_capacity;
-    
+            cardTemplate.querySelector('.card-text:nth-of-type(1)').textContent = 'Level: ' + seminar.seminar_difficulty;
+            cardTemplate.querySelector('.card-text:nth-of-type(2)').textContent = 'Date start: ' + seminar.seminar_date_start;
+            cardTemplate.querySelector('.card-text:nth-of-type(3)').textContent = 'Date end: ' + seminar.seminar_date_end;
+            cardTemplate.querySelector('.card-text:nth-of-type(4)').textContent = 'Description: ' + seminar.seminar_description;
+            cardTemplate.querySelector('.card-text:nth-of-type(5)').textContent = 'Duration: ' + seminar.seminar_duration + ' days';
+            cardTemplate.querySelector('.card-text:nth-of-type(6)').textContent = 'Capacity: ' + seminar.seminar_capacity;
+
             const col = document.createElement('div');
             col.classList.add('col-md-4', 'mb-4');
             col.appendChild(cardTemplate);
-    
-            seminarContainer.appendChild(col);
-    
+
+            seminarContainer.appendChild(col); // Add the column to the seminar container
+
+            // Add a new row after every third seminar
             if ((index + 1) % 3 === 0) {
               seminarContainer.appendChild(document.createElement('div'));
             }
