@@ -2,6 +2,13 @@
 
 body {
   background-color: rgb(232, 223, 210);
+  transition: background 2s;
+}
+
+body.dark-mode {
+  background-color: rgb(33, 29, 26);
+  color: #fff;
+  transition: background 2s;
 }
 
 .btn-sign-out {
