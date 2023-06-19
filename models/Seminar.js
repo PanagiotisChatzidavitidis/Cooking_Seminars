@@ -25,6 +25,10 @@ const SeminarSchema = mongoose.Schema(
     seminar_capacity: {
       type: Number,
       default: 50
+    },
+    seminar_difficulty: {
+      type: String,
+      required: true
     }
   },
   {

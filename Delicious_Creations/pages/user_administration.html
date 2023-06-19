@@ -1,96 +1,207 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Administration</title>
-  <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
-  <link rel="stylesheet" href="../css/style.css?v=<?php echo time(); ?>">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="user_administration.css">
+    <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css?v=<?php echo time(); ?>">
+  
 </head>
+
 <body>
-  <header>
-    <img src="../images/CR_transparent.png" width="200">
-    <button class="btn btn-sign-out" onclick="location.href='home.html'">Sign Out</button>
-  </header>
+    <header>
+        <img src="../images/CR_transparent.png" width="200">
+        <button class="btn btn-sign-out" onclick="location.href='home.html'">Sign Out</button>
+    </header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="user_home.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about_us.html">About us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="seminars.html">Seminars</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="forum.html">Forum</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled" href="cooking_business.html" style="color: rgba(255, 255, 255, 0.395);">Job Opportunities</a>
+              </li>
+            </ul>
+            <form class="d-flex" role="search">
+              <input id="searchInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button id="searchButton" class="btn btn-outline-success" type="button" style="color: white; background-color: transparent; border-color: white;">Search</button>
+            </form>
+          </div>
+        </div>
+    </nav>
 
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="admin_home.html">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="admin_seminars.html">Seminars</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="admin_forum.html">Forum</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="admin_cooking_business.html">Bussiness Network</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="user_administration.html">Users</a>
-          </li>
-        </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit" style="color: white; background-color: transparent; border-color: white;">Search</button>
-        </form>
+    <div id="userContainer" class="container">
+      <h3 style="position: relative; left: -90px; top: 20px;">Users</h3>
+      <div class="row" style="position: relative; left: -90px; top: 20px;">
+        <!-- User data will be dynamically added here -->
       </div>
     </div>
-  </nav>
 
-  <div class="container">
-    <div class="table-wrapper">
-      <div class="table-title">
-        <h2>User Administration</h2>
-        <button class="btn btn-success add-new">Add New</button>
+    <div class ="container" style="position: relative; left: -90px; top: 20px;">
+      <div class="row">
+        <div class="col-md-6">
+          <h3>Delete User</h3>
+          <select id="userDropdown" class="form-select mb-3">
+            <option selected>Select a username</option>
+          </select>
+          <button id="deleteButton" class="btn btn-sign-out" style="position: relative; left: 80px;top: -67px;">Delete</button>
+        </div>
       </div>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th>Gender</th>
-            <th>Country</th>
-            <th>City</th>
-            <th>Address</th>
-            <th>Phone</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>John Doe</td>
-            <td>JohnDoe@gmail.com</td>
-            <td>asdsad</td>
-            <td>Male</td>
-            <td>Greece</td>
-            <td>kOMOTINI</td>
-            <td>PElagiou 2</td>
-            <td>69696969</td>
-            <td>
-                <a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-                <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-            </td>
-        </tr>
-        </tbody>
-      </table>
     </div>
-  </div>
+    
+    <script>
+      // Fetch user data
+      fetch('http://localhost:3000/users')
+        .then(response => response.json())
+        .then(data => {
+          const userContainer = document.querySelector('.row');
+          let usersData = data; // Store the original user data
 
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-  <script src="../js/user_administration.js"></script>
+          // Create HTML elements to display user data in a table
+          const table = document.createElement('table');
+          table.classList.add('table', 'table-striped', 'wider-table');
+
+          // Create table header
+          const thead = document.createElement('thead');
+          const headerRow = document.createElement('tr');
+          const headers = ['Username', 'Email', 'Gender', 'Country', 'City', 'Address', 'Phone', 'Trait'];
+
+          headers.forEach(headerText => {
+            const th = document.createElement('th');
+            th.textContent = headerText;
+            headerRow.appendChild(th);
+          });
+
+          thead.appendChild(headerRow);
+          table.appendChild(thead);
+
+          // Create table body
+          const tbody = document.createElement('tbody');
+
+          const displayUsers = (users) => {
+            // Clear existing table body
+            tbody.innerHTML = '';
+
+            // Clear existing dropdown options
+            const userDropdown = document.getElementById('userDropdown');
+            userDropdown.innerHTML = '<option selected>Select a username</option>';
+
+            users.forEach(user => {
+              const row = document.createElement('tr');
+
+              // Create table cells and set user data
+              const usernameCell = document.createElement('td');
+              usernameCell.textContent = user.username;
+
+              const emailCell = document.createElement('td');
+              emailCell.textContent = user.email;
+
+              const genderCell = document.createElement('td');
+              genderCell.textContent = user.gender;
+
+              const countryCell = document.createElement('td');
+              countryCell.textContent = user.country;
+
+              const cityCell = document.createElement('td');
+              cityCell.textContent = user.city;
+
+              const addressCell = document.createElement('td');
+              addressCell.textContent = user.address;
+
+              const phoneCell = document.createElement('td');
+              phoneCell.textContent = user.phone;
+
+              const traitCell = document.createElement('td');
+              traitCell.textContent = user.trait;
+
+              // Append cells to the row
+              row.appendChild(usernameCell);
+              row.appendChild(emailCell);
+              row.appendChild(genderCell);
+              row.appendChild(countryCell);
+              row.appendChild(cityCell);
+              row.appendChild(addressCell);
+              row.appendChild(phoneCell);
+              row.appendChild(traitCell);
+
+              // Append row to the table body
+              tbody.appendChild(row);
+
+              // Add username to dropdown options
+              const option = document.createElement('option');
+              option.textContent = user.username;
+              userDropdown.appendChild(option);
+            });
+
+            table.appendChild(tbody);
+          };
+
+          // Display all users initially
+          displayUsers(usersData);
+
+          const col = document.createElement('div');
+          col.classList.add('col-md-8', 'mb-4');
+          col.appendChild(table);
+
+          userContainer.appendChild(col);
+
+          // Delete functionality
+          const deleteButton = document.getElementById('deleteButton');
+          const userDropdown = document.getElementById('userDropdown');
+
+          deleteButton.addEventListener('click', () => {
+            const selectedUsername = userDropdown.value;
+
+            if (selectedUsername === 'Select a username') {
+              alert('Please select a username to delete.');
+              return;
+            }
+
+            const deleteUser = usersData.find(user => user.username === selectedUsername);
+
+            if (deleteUser) {
+              const confirmation = confirm(`Are you sure you want to delete the user ${deleteUser.username}?`);
+
+              if (confirmation) {
+                // Make DELETE request to the server
+                fetch(`http://localhost:3000/users/${deleteUser._id}`, { method: 'DELETE' })
+                  .then(response => response.json())
+                  .then(data => {
+                    alert('User deleted successfully.');
+
+                    // Remove the deleted user from the user data
+                    usersData = usersData.filter(user => user.username !== selectedUsername);
+
+                    // Update the displayed users and reset the dropdown
+                    displayUsers(usersData);
+                    userDropdown.value = 'Select a username';
+                  })
+                  .catch(error => {
+                    console.error('Error deleting user:', error);
+                  });
+              }
+            }
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching user data:', error);
+        });
+    </script>
+
+    <footer>
+      <div class="container">
+        <div class="text-center">
+            &copy; Delicious Creations 2023. All Rights Reserved.
+        </div>
+      </div>
+    </footer>
 </body>
 </html>
