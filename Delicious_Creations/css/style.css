@@ -127,7 +127,7 @@ body.dark-mode {
 
 .card {
   width: 400px;
-  height: 610px;
+  height: 640px;
 }
 
 
@@ -189,7 +189,7 @@ p {
 }
 
 .btn:hover {
-  background-color: #ff7f19;
+  background-color: #676767;
 }
 
 * {box-sizing: border-box;}
