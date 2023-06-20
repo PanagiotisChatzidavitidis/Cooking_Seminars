@@ -1,63 +1,122 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
-        <link rel="stylesheet" href="../css/style.css?v=<?php echo time(); ?>">
+<head>
+    <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css?v=<?php echo time(); ?>">
+    <script src="../jquery-3.7.0.min.js"></script>
+</head>
 
-        <script src="../jquery-3.7.0.min.js"></script>
-        <script type="text/javascript" scr="jquery-3.7.0.min.js"></script>
+<body>
+    <!-- Return Button -->
+    <button type="button" class="btn cancel" onclick="window.location.href = 'home.html';" style="position: relative; top: 20px; right: 20px;">Return</button>
 
-    </head>
-    
-    <body>
-        <!-- Return Button -->
-        <button type="button" class="btn cancel" onclick="window.location.href = 'home.html';" style="position: relative; top: 20px; right: 20px;">Return</button>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Sign Up</h2>
+        <form>
+            <div class="form-group">
+              <label for="firstName">First Name:</label>
+              <input type="text" class="form-control" id="firstName" name="firstName" required>
+            </div>
 
-        <div class="container mt-5">
-            <h2 class="text-center mb-4">Sign Up</h2>
-            <form action="/users" method="POST">
-              <div class="form-group">
-                <label for="firstName">First Name:</label>
-                <input type="text" class="form-control" id="firstName" name="firstName" required>
-              </div>
-            
-              <div class="form-group">
-                <label for="lastName">Last Name:</label>
-                <input type="text" class="form-control" id="lastName" name="lastName" required>
-              </div>
-            
-              <div class="form-group">
-                <label for="birthday">Birthday:</label>
-                <input type="date" class="form-control" id="birthday" name="birthday" required>
-              </div>
-            
-              <div class="form-group">
-                <label for="gender">Gender:</label>
-                <select class="form-control" id="gender" name="gender" required>
-                  <option value="">Select</option>
-                  <option value="female">Female</option>
-                  <option value="male">Male</option>
-                  <option value="other">Other</option>
-                </select>
-              </div>
-            
-              <div class="form-group">
+            <div class="form-group">
+              <label for="lastName">Last Name:</label>
+              <input type="text" class="form-control" id="lastName" name="lastName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+
+            <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" class="form-control" id="email" name="email" required>
-              </div>
-            
-              <div class="form-group">
+            </div>
+
+            <div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" class="form-control" id="password" name="password" required>
-              </div>
-            
-              <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
-                <label class="form-check-label" for="terms">I agree to the terms and conditions</label>
-              </div>
-            
-              <button type="submit" class="btn btn-primary">Sign Up</button>
-            </form>
-            
-          </div>
-        </body>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender:</label>
+                <select class="form-control" id="gender" name="gender" required>
+                    <option value="">Select</option>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="country">Country:</label>
+                <input type="text" class="form-control" id="country" name="country" required>
+            </div>
+
+            <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" class="form-control" id="city" name="city" required>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" class="form-control" id="address" name="address" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input type="text" class="form-control" id="phone" name="phone" required>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="submitForm()">Sign Up</button>
+        </form>
+    </div>
+
+    <script>
+        function submitForm() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const gender = document.getElementById('gender').value;
+            const country = document.getElementById('country').value;
+            const city = document.getElementById('city').value;
+            const address = document.getElementById('address').value;
+            const phone = document.getElementById('phone').value;
+
+            const userData = {
+                firstName: firstName,
+                lastName: lastName,
+                username: username,
+                email: email,
+                password: password,
+                gender: gender,
+                country: country,
+                city: city,
+                address: address,
+                phone: phone,
+                trait: "User"
+            };
+
+            fetch('http://localhost:3000/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('User created:', data);
+                    // You can perform additional actions after creating the user
+                    // For example, redirect to a success page or perform login
+                })
+                .catch(error => {
+                    console.error('Error creating user:', error);
+                    // Handle the error, display an error message, etc.
+                });
+        }
+    </script>
+</body>
 </html>

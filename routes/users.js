@@ -1,11 +1,14 @@
 const express = require('express');
 const router = express.Router();
-
+//const passport = require('passport');
+//const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
 
 // POST (create data)
 router.post('/', async (req, res) => {
-  const postData = new User({
+  const userData = new User({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     username: req.body.username,
     email: req.body.email,
     password: req.body.password,
@@ -18,10 +21,10 @@ router.post('/', async (req, res) => {
   });
 
   try {
-    const userToSave = await postData.save();
-    res.send(userToSave);
+    const savedUser = await userData.save();
+    res.send(savedUser);
   } catch (err) {
-    res.send({ message: err });
+    res.status(400).send({ message: err.message });
   }
 });
 
@@ -31,7 +34,7 @@ router.get('/', async (req, res) => {
     const getUsers = await User.find();
     res.send(getUsers);
   } catch (err) {
-    res.send({ message: err });
+    res.status(500).send({ message: err.message });
   }
 });
 
@@ -41,7 +44,31 @@ router.get('/:userId', async (req, res) => {
     const getUserById = await User.findById(req.params.userId);
     res.send(getUserById);
   } catch (err) {
-    res.send({ message: err });
+    res.status(500).send({ message: err.message });
+  }
+});
+
+// GET3 (search data)
+router.get('/search', async (req, res) => {
+  try {
+    const searchTerm = req.query.search; // Get the search term from the query parameters
+
+    // Construct a query to search for the term in relevant fields of the seminar collection
+    const query = {
+      $or: [
+        { seminar_name: { $regex: searchTerm, $options: 'i' } },
+        { seminar_date_start: { $regex: searchTerm, $options: 'i' } },
+        { seminar_date_end: { $regex: searchTerm, $options: 'i' } },
+        { seminar_description: { $regex: searchTerm, $options: 'i' } },
+        { seminar_duration: { $regex: searchTerm, $options: 'i' } },
+        { seminar_difficulty: { $regex: searchTerm, $options: 'i' } },
+      ],
+    };
+
+    const searchResults = await Seminar.find(query);
+    res.send(searchResults);
+  } catch (err) {
+    res.status(500).send({ message: err });
   }
 });
 
@@ -52,6 +79,8 @@ router.patch('/:userId', async (req, res) => {
       { _id: req.params.userId },
       {
         $set: {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
           username: req.body.username,
           email: req.body.email,
           password: req.body.password,
@@ -67,7 +96,7 @@ router.patch('/:userId', async (req, res) => {
     );
     res.send(updateUserById);
   } catch (err) {
-    res.send({ message: err });
+    res.status(400).send({ message: err.message });
   }
 });
 
@@ -77,8 +106,12 @@ router.delete('/:userId', async (req, res) => {
     const deleteUserById = await User.deleteOne({ _id: req.params.userId });
     res.send(deleteUserById);
   } catch (err) {
-    res.send({ message: err });
+    res.status(500).send({ message: err.message });
   }
 });
+
+
+
+
 
 module.exports = router;

@@ -1,14 +1,13 @@
+<!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="../css/style.css?v=<?php echo time(); ?>">
 
     <script src="../jquery-3.7.0.min.js"></script>
-    <script type="text/javascript" scr="jquery-3.7.0.min.js"></script>
+    <script type="text/javascript" src="jquery-3.7.0.min.js"></script>
 
-    
 </head>
-
 
 <body>
     <header>
@@ -30,7 +29,7 @@
                 <a class="nav-link" href="admin_forum.html">Forum</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="admin_cooking_business.html">Bussiness Network</a>
+                <a class="nav-link" href="admin_cooking_business.html">Business Network</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="user_administration.html">Users</a>
@@ -40,9 +39,6 @@
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success" type="submit" style="color: white; background-color: transparent; border-color: white;">Search</button>
             </form>
-
-            
-
           </div>
         </div>
       </nav>
@@ -58,7 +54,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <label for="seminar_duration">Duration </label>
+              <label for="seminar_duration">Duration</label>
               <input type="number" class="form-control" id="seminar_duration" placeholder="Enter seminar duration">
             </div>
           </div>
@@ -85,10 +81,32 @@
             </div>
           </div>
         </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="seminar_difficulty">Level</label>
+            <select class="form-control" id="seminar_difficulty">
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+            </select>
+          </div>
+        </div>
         <div class="d-flex justify-content-center">
           <button type="button" class="btn btn-sign" onclick="createSeminar()">Create Seminar</button>
         </div>
       </form>
+
+      <div class="container" style="position: relative; left: -90px; top: 20px;">
+        <div class="row">
+          <div class="col-md-6">
+            <h3>Delete Seminar</h3>
+            <select id="seminarDropdown" class="form-select mb-3">
+              <option selected>Select seminar title</option>
+            </select>
+            <button id="deleteButton" class="btn btn-sign-out" style="position: relative; left: 80px; top: -67px;">Delete</button>
+          </div>
+        </div>
+      </div>
         
     <footer>
       <div class="container">
@@ -98,46 +116,100 @@
     </div>
     </footer>
 
-
-
-<script>
-    function createSeminar() {
-      const seminarName = document.getElementById('seminar_name').value;
-      const startDate = document.getElementById('seminar_date_start').value;
-      const endDate = document.getElementById('seminar_date_end').value;
-      const description = document.getElementById('seminar_description').value;
-      const duration = document.getElementById('seminar_duration').value;
-      const capacity = document.getElementById('seminar_capacity').value;
-  
-      // Prepare the data to be sent to the server
-      const seminarData = {
-        seminar_name: seminarName,
-        seminar_date_start: startDate,
-        seminar_date_end: endDate,
-        seminar_description: description,
-        seminar_duration: duration,
-        seminar_capacity: capacity
-      };
-  
-      fetch('http://localhost:3000/seminars', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(seminarData)
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Seminar created:', data);
-          // You can perform additional actions after creating the seminar
-          // For example, redirect to a success page or update the seminar list
-        })
-        .catch(error => {
-          console.error('Error creating seminar:', error);
-          // Handle the error, display an error message, etc.
-        });
-    }
-  </script>
+    <script>
+      function createSeminar() {
+        const seminarName = document.getElementById('seminar_name').value;
+        const startDate = document.getElementById('seminar_date_start').value;
+        const endDate = document.getElementById('seminar_date_end').value;
+        const description = document.getElementById('seminar_description').value;
+        const duration = document.getElementById('seminar_duration').value;
+        const difficulty = document.getElementById('seminar_difficulty').value;
     
+        // Prepare the data to be sent to the server
+        const seminarData = {
+          seminar_name: seminarName,
+          seminar_date_start: startDate,
+          seminar_date_end: endDate,
+          seminar_description: description,
+          seminar_duration: duration,
+          seminar_capacity: 50,
+          seminar_difficulty: difficulty
+        };
+    
+        fetch('http://localhost:3000/seminars', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(seminarData)
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Seminar created:', data);
+            // You can perform additional actions after creating the seminar
+            // For example, redirect to a success page or update the seminar list
+          })
+          .catch(error => {
+            console.error('Error creating seminar:', error);
+            // Handle the error, display an error message, etc.
+          });
+      }
+
+      // Function to fetch and display seminars in the dropdown
+      function fetchSeminars() {
+        fetch('http://localhost:3000/seminars')
+          .then(response => response.json())
+          .then(data => {
+            const seminarDropdown = document.getElementById('seminarDropdown');
+
+            // Clear the dropdown options
+            seminarDropdown.innerHTML = '<option selected>Select seminar title</option>';
+
+            // Add options for each seminar
+            data.forEach(seminar => {
+              const option = document.createElement('option');
+              option.value = seminar.seminar_name;
+              option.textContent = seminar.seminar_name;
+              seminarDropdown.appendChild(option);
+            });
+          })
+          .catch(error => {
+            console.error('Error fetching seminars:', error);
+          });
+      }
+
+      // Delete functionality
+      const deleteButton = document.getElementById('deleteButton');
+      const seminarDropdown = document.getElementById('seminarDropdown');
+
+      deleteButton.addEventListener('click', () => {
+        const selectedSeminar = seminarDropdown.value;
+
+        if (selectedSeminar === 'Select seminar title') {
+          alert('Please select a seminar to delete.');
+          return;
+        }
+
+        const confirmation = confirm(`Are you sure you want to delete the seminar "${selectedSeminar}"?`);
+
+        if (confirmation) {
+          // Make DELETE request to the server
+          fetch(`http://localhost:3000/seminars/${selectedSeminar}`, { method: 'DELETE' })
+            .then(response => response.json())
+            .then(data => {
+              alert('Seminar deleted successfully.');
+
+              // Perform any additional actions after deleting the seminar
+              // For example, update the seminar list or display a success message
+            })
+            .catch(error => {
+              console.error('Error deleting seminar:', error);
+            });
+        }
+      });
+
+      // Fetch seminars and display them in the dropdown
+      fetchSeminars();
+    </script>
   </body>
-  </html>
+</html>

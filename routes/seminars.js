@@ -43,6 +43,7 @@ router.get('/:seminarId', async (req, res) => {
   }
 });
 
+
 // PATCH (Update data)
 router.patch('/:seminarId', async (req, res) => {
   try {
@@ -67,11 +68,11 @@ router.patch('/:seminarId', async (req, res) => {
   }
 });
 
-// DELETE (Delete data by id)
-router.delete('/:seminarId', async (req, res) => {
+// DELETE (Delete data by seminar name)
+router.delete('/:seminarName', async (req, res) => {
   try {
-    const deleteSeminarById = await Seminar.deleteOne({ _id: req.params.seminarId });
-    res.send(deleteSeminarById);
+    const deleteSeminarByName = await Seminar.deleteOne({ seminar_name: req.params.seminarName });
+    res.send(deleteSeminarByName);
   } catch (err) {
     res.send({ message: err });
   }

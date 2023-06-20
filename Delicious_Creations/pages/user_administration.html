@@ -72,73 +72,151 @@
       </div>
     </div>
     
-    <script>table
+    <div class="container mt-5">
+      <h2 class="text-center mb-4">Sign Up</h2>
+      <form>
+          <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" class="form-control" id="firstName" name="firstName" required>
+          </div>
+
+          <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" class="form-control" id="lastName" name="lastName" required>
+          </div>
+
+          <div class="form-group">
+              <label for="username">Username:</label>
+              <input type="text" class="form-control" id="username" name="username" required>
+          </div>
+
+          <div class="form-group">
+              <label for="email">Email:</label>
+              <input type="email" class="form-control" id="email" name="email" required>
+          </div>
+
+          <div class="form-group">
+              <label for="password">Password:</label>
+              <input type="password" class="form-control" id="password" name="password" required>
+          </div>
+
+          <div class="form-group">
+              <label for="gender">Gender:</label>
+              <select class="form-control" id="gender" name="gender" required>
+                  <option value="">Select</option>
+                  <option value="female">Female</option>
+                  <option value="male">Male</option>
+                  <option value="other">Other</option>
+              </select>
+          </div>
+
+          <div class="form-group">
+              <label for="country">Country:</label>
+              <input type="text" class="form-control" id="country" name="country" required>
+          </div>
+
+          <div class="form-group">
+              <label for="city">City:</label>
+              <input type="text" class="form-control" id="city" name="city" required>
+          </div>
+
+          <div class="form-group">
+              <label for="address">Address:</label>
+              <input type="text" class="form-control" id="address" name="address" required>
+          </div>
+
+          <div class="form-group">
+              <label for="phone">Phone:</label>
+              <input type="text" class="form-control" id="phone" name="phone" required>
+          </div>
+          <div class="form-group">
+            <label for="trait">Trait:</label>
+            <select class="form-control" id="trait" name="trait" required>
+                <option value="">Select</option>
+                <option value="User">User</option>
+                <option value="Admin">Admin</option>
+            </select>
+          </div>
+
+          <button type="button" class="btn btn-primary" onclick="submitForm()">Create User</button>
+      </form>
+  </div>
+  
+    <script>
       // Fetch user data
       fetch('http://localhost:3000/users')
         .then(response => response.json())
         .then(data => {
           const userContainer = document.querySelector('.row');
           let usersData = data; // Store the original user data
-
+    
           // Create HTML elements to display user data in a table
           const table = document.createElement('table');
           table.classList.add('table', 'table-striped', 'wider-table');
-
+    
           // Create table header
           const thead = document.createElement('thead');
           const headerRow = document.createElement('tr');
-          const headers = ['Username', 'Email', 'Gender', 'Country', 'City', 'Address', 'Phone', 'Trait'];
-
+          const headers = ['Username', 'Name', 'Last Name', 'Email', 'Gender', 'Country', 'City', 'Address', 'Phone', 'Trait'];
+    
           headers.forEach(headerText => {
             const th = document.createElement('th');
             th.textContent = headerText;
             headerRow.appendChild(th);
           });
-
+    
           thead.appendChild(headerRow);
           table.appendChild(thead);
-
+    
           // Create table body
           const tbody = document.createElement('tbody');
-
+    
           const displayUsers = (users) => {
             // Clear existing table body
             tbody.innerHTML = '';
-
+    
             // Clear existing dropdown options
             const userDropdown = document.getElementById('userDropdown');
             userDropdown.innerHTML = '<option selected>Select a username</option>';
-
+    
             users.forEach(user => {
               const row = document.createElement('tr');
-
+    
               // Create table cells and set user data
               const usernameCell = document.createElement('td');
               usernameCell.textContent = user.username;
-
+    
+              const firstNameCell = document.createElement('td');
+              firstNameCell.textContent = user.firstName;
+    
+              const lastNameCell = document.createElement('td');
+              lastNameCell.textContent = user.lastName;
+    
               const emailCell = document.createElement('td');
               emailCell.textContent = user.email;
-
+    
               const genderCell = document.createElement('td');
               genderCell.textContent = user.gender;
-
+    
               const countryCell = document.createElement('td');
               countryCell.textContent = user.country;
-
+    
               const cityCell = document.createElement('td');
               cityCell.textContent = user.city;
-
+    
               const addressCell = document.createElement('td');
               addressCell.textContent = user.address;
-
+    
               const phoneCell = document.createElement('td');
               phoneCell.textContent = user.phone;
-
+    
               const traitCell = document.createElement('td');
               traitCell.textContent = user.trait;
-
+    
               // Append cells to the row
               row.appendChild(usernameCell);
+              row.appendChild(firstNameCell);
+              row.appendChild(lastNameCell);
               row.appendChild(emailCell);
               row.appendChild(genderCell);
               row.appendChild(countryCell);
@@ -146,55 +224,55 @@
               row.appendChild(addressCell);
               row.appendChild(phoneCell);
               row.appendChild(traitCell);
-
+    
               // Append row to the table body
               tbody.appendChild(row);
-
+    
               // Add username to dropdown options
               const option = document.createElement('option');
               option.textContent = user.username;
               userDropdown.appendChild(option);
             });
-
+    
             table.appendChild(tbody);
           };
-
+    
           // Display all users initially
           displayUsers(usersData);
-
+    
           const col = document.createElement('div');
           col.classList.add('col-md-8', 'mb-4');
           col.appendChild(table);
-
+    
           userContainer.appendChild(col);
-
+    
           // Delete functionality
           const deleteButton = document.getElementById('deleteButton');
           const userDropdown = document.getElementById('userDropdown');
-
+    
           deleteButton.addEventListener('click', () => {
             const selectedUsername = userDropdown.value;
-
+    
             if (selectedUsername === 'Select a username') {
               alert('Please select a username to delete.');
               return;
             }
-
+    
             const deleteUser = usersData.find(user => user.username === selectedUsername);
-
+    
             if (deleteUser) {
               const confirmation = confirm(`Are you sure you want to delete the user ${deleteUser.username}?`);
-
+    
               if (confirmation) {
                 // Make DELETE request to the server
                 fetch(`http://localhost:3000/users/${deleteUser._id}`, { method: 'DELETE' })
                   .then(response => response.json())
                   .then(data => {
                     alert('User deleted successfully.');
-
+    
                     // Remove the deleted user from the user data
                     usersData = usersData.filter(user => user.username !== selectedUsername);
-
+    
                     // Update the displayed users and reset the dropdown
                     displayUsers(usersData);
                     userDropdown.value = 'Select a username';
@@ -209,7 +287,54 @@
         .catch(error => {
           console.error('Error fetching user data:', error);
         });
-    </script>
+
+        function submitForm() {
+          const firstName = document.getElementById('firstName').value;
+          const lastName = document.getElementById('lastName').value;
+          const username = document.getElementById('username').value;
+          const email = document.getElementById('email').value;
+          const password = document.getElementById('password').value;
+          const gender = document.getElementById('gender').value;
+          const country = document.getElementById('country').value;
+          const city = document.getElementById('city').value;
+          const address = document.getElementById('address').value;
+          const phone = document.getElementById('phone').value;
+          const trait = document.getElementById('trait').value;
+      
+          const userData = {
+            firstName: firstName,
+            lastName: lastName,
+            username: username,
+            email: email,
+            password: password,
+            gender: gender,
+            country: country,
+            city: city,
+            address: address,
+            phone: phone,
+            trait: trait
+          };
+      
+          fetch('http://localhost:3000/users', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userData)
+          })
+            .then(response => response.json())
+            .then(data => {
+              console.log('User created:', data);
+              // You can perform additional actions after creating the user
+              // For example, redirect to a success page or perform login
+            })
+            .catch(error => {
+              console.error('Error creating user:', error);
+              // Handle the error, display an error message, etc.
+            });
+        }
+  </script>
+    
 
     <footer>
       <div class="container">
