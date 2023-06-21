@@ -20,10 +20,13 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="admin_home.html">Home</a>
+                <a class="nav-link" href="admin_home.html">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="admin_seminars.html">Seminars</a>
+                <a class="nav-link" href="seminars.html">Seminar Preview</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="admin_seminars.html">Seminar Administration</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="admin_forum.html">Forum</a>
@@ -81,22 +84,100 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="seminar_difficulty">Level</label>
-            <select class="form-control" id="seminar_difficulty">
-              <option value="Beginner">Beginner</option>
-              <option value="Intermediate">Intermediate</option>
-              <option value="Advanced">Advanced</option>
-            </select>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="seminar_difficulty">Level</label>
+              <select class="form-control" id="seminar_difficulty">
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="seminar_cost">Cost</label>
+              <input type="number" class="form-control" id="seminar_cost" placeholder="Enter seminar cost">
+            </div>
           </div>
         </div>
+
         <div class="d-flex justify-content-center">
           <button type="button" class="btn btn-sign" onclick="createSeminar()">Create Seminar</button>
         </div>
       </form>
+      
 
-      <div class="container" style="position: relative; left: -90px; top: 20px;">
+      <form>
+        <h2>Update Seminar</h2>
+        
+        </div>
+        <div class="row">
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Seminar</label>
+            <select id="seminarDropdown_update" class="form-select mb-3">
+              <option selected>Select seminar title</option>
+            </select>
+          </div>
+      </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="seminar_duration_update">Duration</label>
+              <input type="number" class="form-control" id="seminar_duration_update" placeholder="Enter seminar duration">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="seminar_date_start_update">Start date</label>
+              <input type="date" class="form-control" id="seminar_date_start_update" placeholder="Select start date">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="seminar_date_end_update">End date</label>
+              <input type="date" class="form-control" id="seminar_date_end_update" placeholder="Select end date">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-14">
+            <div class="form-group">
+              <label for="seminar_description_update">Description</label>
+              <textarea class="form-control" id="seminar_description_update" rows="3" placeholder="Enter seminar description"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="seminar_difficulty_update">Level</label>
+              <select class="form-control" id="seminar_difficulty_update">
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="seminar_cost_update">Cost</label>
+              <input type="number" class="form-control" id="seminar_cost_update" placeholder="Enter seminar cost">
+            </div>
+          </div>
+        </div>
+      
+        <div class="d-flex justify-content-center">
+          <button id="updateButton" type="button" class="btn btn-sign">Update Seminar</button>
+        </div>
+      </form>
+      
+
+      <div class="container" style="position: relative; left: -380px; top: 20px;">
         <div class="row">
           <div class="col-md-6">
             <h3>Delete Seminar</h3>
@@ -124,6 +205,7 @@
         const description = document.getElementById('seminar_description').value;
         const duration = document.getElementById('seminar_duration').value;
         const difficulty = document.getElementById('seminar_difficulty').value;
+        const cost = document.getElementById('seminar_cost').value;
     
         // Prepare the data to be sent to the server
         const seminarData = {
@@ -133,7 +215,8 @@
           seminar_description: description,
           seminar_duration: duration,
           seminar_capacity: 50,
-          seminar_difficulty: difficulty
+          seminar_difficulty: difficulty,
+          seminar_cost: cost
         };
     
         fetch('http://localhost:3000/seminars', {
@@ -155,8 +238,8 @@
           });
       }
 
-      // Function to fetch and display seminars in the dropdown
-      function fetchSeminars() {
+      // Function to fetch and display seminars in the dropdown for delete
+      function fetchSeminarsdelete() {
         fetch('http://localhost:3000/seminars')
           .then(response => response.json())
           .then(data => {
@@ -168,8 +251,8 @@
             // Add options for each seminar
             data.forEach(seminar => {
               const option = document.createElement('option');
-              option.value = seminar.seminar_name;
-              option.textContent = seminar.seminar_name;
+              option.value = seminar.seminar_name; // Use "seminar_name" property
+              option.textContent = seminar.seminar_name; // Use "seminar_name" property
               seminarDropdown.appendChild(option);
             });
           })
@@ -208,8 +291,87 @@
         }
       });
 
-      // Fetch seminars and display them in the dropdown
-      fetchSeminars();
+      // Function to fetch and display seminars in the dropdown for update
+      function fetchSeminarsupdate() {
+        fetch('http://localhost:3000/seminars')
+          .then(response => response.json())
+          .then(data => {
+            const seminarDropdown_update = document.getElementById('seminarDropdown_update');
+
+            // Clear the dropdown options
+            seminarDropdown_update.innerHTML = '<option selected>Select seminar title</option>';
+
+            // Add options for each seminar
+            data.forEach(seminar => {
+              const option = document.createElement('option');
+              option.value = seminar.seminar_name; // Use "seminar_name" property
+              option.textContent = seminar.seminar_name; // Use "seminar_name" property
+              seminarDropdown_update.appendChild(option);
+            });
+          })
+          .catch(error => {
+            console.error('Error fetching seminars:', error);
+          });
+      }
+
+      //UPDATE
+      
+
+      const updateButton = document.getElementById('updateButton');
+      const seminarDropdown_update = document.getElementById('seminarDropdown_update');
+
+      updateButton.addEventListener('click', () => {
+        const selectedSeminar = seminarDropdown_update.value;
+        if (selectedSeminar === 'Select seminar title') {
+          alert('Please select a seminar to update.');
+          return;
+        }
+
+        // Retrieve the updated values
+        //const seminarNameUpdate = document.getElementById('seminar_name_update').value;
+        const startDateUpdate = document.getElementById('seminar_date_start_update').value;
+        const endDateUpdate = document.getElementById('seminar_date_end_update').value;
+        const descriptionUpdate = document.getElementById('seminar_description_update').value;
+        const durationUpdate = document.getElementById('seminar_duration_update').value;
+        const difficultyUpdate = document.getElementById('seminar_difficulty_update').value;
+        const costUpdate = document.getElementById('seminar_cost_update').value;
+
+        const seminarData = {
+          //seminar_name: seminarNameUpdate,
+          seminar_date_start: startDateUpdate,
+          seminar_date_end: endDateUpdate,
+          seminar_description: descriptionUpdate,
+          seminar_duration: durationUpdate,
+          seminar_difficulty: difficultyUpdate,
+          seminar_cost: costUpdate
+        };
+        const confirmation = confirm(`Are you sure you want to update the seminar "${selectedSeminar}"?`);
+        if (confirmation) {
+          fetch(`http://localhost:3000/seminars/${selectedSeminar}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(seminarData)
+          })
+            .then(response => response.json())
+            .then(data => {
+              alert('Seminar updated successfully.');
+            })
+            .catch(error => {
+              console.error('Error updating seminar:', error);
+            });
+        }
+      });
+
+            
+      
+
+      // Fetch seminars and display them in the dropdown for delete
+      fetchSeminarsdelete();
+
+      // Fetch seminars and display them in the dropdown for update
+      fetchSeminarsupdate();
     </script>
   </body>
 </html>

@@ -13,7 +13,8 @@ router.post('/', async (req, res) => {
       seminar_description: req.body.seminar_description,
       seminar_duration: req.body.seminar_duration,
       seminar_capacity: req.body.seminar_capacity || 50,
-      seminar_difficulty: req.body.seminar_difficulty
+      seminar_difficulty: req.body.seminar_difficulty,
+      seminar_cost: req.body.seminar_cost
     });
 
     const seminarToSave = await seminarData.save();
@@ -43,30 +44,35 @@ router.get('/:seminarId', async (req, res) => {
   }
 });
 
-
 // PATCH (Update data)
-router.patch('/:seminarId', async (req, res) => {
+router.patch('/:seminarName', async (req, res) => {
   try {
-    const updateSeminarById = await Seminar.findByIdAndUpdate(
-      { _id: req.params.seminarId },
+    // Update seminar by finding and updating based on seminar_name
+    const updateSeminarByName = await Seminar.findOneAndUpdate(
+      { seminar_name: req.params.seminarName }, // Find seminar with matching seminar_name
       {
         $set: {
-          seminar_name: req.body.seminar_name,
           seminar_date_end: req.body.seminar_date_end,
           seminar_date_start: req.body.seminar_date_start,
           seminar_description: req.body.seminar_description,
           seminar_duration: req.body.seminar_duration,
           seminar_capacity: req.body.seminar_capacity,
-          seminar_difficulty: req.body.seminar_difficulty
+          seminar_difficulty: req.body.seminar_difficulty,
+          seminar_cost: req.body.seminar_cost
         }
       },
       { new: true, runValidators: true }
     );
-    res.send(updateSeminarById);
+
+    // Send the updated seminar as the response
+    res.send(updateSeminarByName);
   } catch (err) {
+    // If an error occurs, send an error message as the response
     res.send({ message: err });
   }
 });
+
+
 
 // DELETE (Delete data by seminar name)
 router.delete('/:seminarName', async (req, res) => {

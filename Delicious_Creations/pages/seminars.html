@@ -62,6 +62,7 @@
         <p class="card-text"></p>
         <p class="card-text"></p>
         <p class="card-text"></p>
+        <p class="card-text"></p>
         <a href="#" class="btn btn-primary">Join</a>
       </div>
     </div>
@@ -90,6 +91,7 @@
               cardTemplate.querySelector('.card-text:nth-of-type(4)').textContent = 'Description: ' + seminar.seminar_description;
               cardTemplate.querySelector('.card-text:nth-of-type(5)').textContent = 'Duration: ' + seminar.seminar_duration + ' days';
               cardTemplate.querySelector('.card-text:nth-of-type(6)').textContent = 'Capacity: ' + seminar.seminar_capacity;
+              cardTemplate.querySelector('.card-text:nth-of-type(7)').textContent = 'Cost: ' + seminar.seminar_cost;
 
               const col = document.createElement('div');
               col.classList.add('col-md-4', 'mb-4');

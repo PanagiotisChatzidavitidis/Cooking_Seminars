@@ -72,18 +72,16 @@ router.get('/search', async (req, res) => {
   }
 });
 
-// PATCH (Update data)
-router.patch('/:userId', async (req, res) => {
+
+// PATCH (Update data by username)
+router.patch('/:username', async (req, res) => {
   try {
-    const updateUserById = await User.findByIdAndUpdate(
-      { _id: req.params.userId },
+    const updateUserByUsername = await User.findOneAndUpdate(
+      { username: req.params.username },
       {
         $set: {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
-          username: req.body.username,
-          email: req.body.email,
-          password: req.body.password,
           gender: req.body.gender,
           country: req.body.country,
           city: req.body.city,
@@ -94,7 +92,14 @@ router.patch('/:userId', async (req, res) => {
       },
       { new: true, runValidators: true }
     );
-    res.send(updateUserById);
+
+    // Exclude username, password, and email from being updated
+    updateUserByUsername.username = req.body.username;
+    updateUserByUsername.email = req.body.email;
+
+    await updateUserByUsername.save();
+
+    res.send(updateUserByUsername);
   } catch (err) {
     res.status(400).send({ message: err.message });
   }

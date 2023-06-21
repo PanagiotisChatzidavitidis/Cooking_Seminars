@@ -25,41 +25,102 @@
         <button class="btn btn-sign-out" onclick="location.href='home.html'">Sign Out</button>
     </header>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" href="user_home.html">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="about_us.html">About us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="seminars.html">Seminars</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="forum.html">Forum</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" href="cooking_business.html" style="color: rgba(255, 255, 255, 0.395);">Job Opportunities</a>
-              </li>
-            </ul>
-            <form class="d-flex" role="search">
-              <input id="searchInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button id="searchButton" class="btn btn-outline-success" type="button" style="color: white; background-color: transparent; border-color: white;">Search</button>
-            </form>
-          </div>
+      <div class="container-fluid">
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="admin_home.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="seminars.html">Seminar Preview</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="admin_seminars.html">Seminar Administration</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="admin_forum.html">Forum</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="admin_cooking_business.html">Business Network</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="user_administration.html">Users</a>
+            </li>
+          </ul>
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit" style="color: white; background-color: transparent; border-color: white;">Search</button>
+          </form>
         </div>
+      </div>
     </nav>
 
-
+    <!-- Display Users -->
     <div id="userContainer" class="container">
       <h3 style="position: relative; left: -90px; top: 20px;">Users</h3>
       <div class="row" style="position: relative; left: -90px; top: 20px;">
         <!-- User data will be dynamically added here -->
       </div>
     </div>
+<!--Update User -->
+    <div class="container">
+      <h3>Update User</h3>
+      <form id="updateForm">
+        <div class="form-group">
+          <label>Username:</label>
+          <select id="userDropdownUpdate" class="form-select mb-3">
+            <option selected>Select a username</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="firstName_update">First Name:</label>
+          <input type="text" class="form-control" id="firstName_update" name="firstName" required>
+        </div>
+        <div class="form-group">
+          <label for="lastName_update">Last Name:</label>
+          <input type="text" class="form-control" id="lastName_update" name="lastName" required>
+        </div>
+        <div class="form-group">
+          <label for="country_update">Country:</label>
+          <input type="text" class="form-control" id="country_update" name="country_update" required>
+      </div>
 
+      <div class="form-group">
+          <label for="city_update">City:</label>
+          <input type="text" class="form-control" id="city_update" name="city_update" required>
+      </div>
+
+        <div class="form-group">
+          <label for="address_update">Address:</label>
+          <input type="text" class="form-control" id="address_update" name="address" required>
+        </div>
+        <div class="form-group">
+          <label for="phone_update">Phone:</label>
+          <input type="tel" class="form-control" id="phone_update" name="phone" required>
+        </div>
+        <div class="form-group">
+          <label for="gender_update">Gender:</label>
+          <select class="form-control" id="gender_update" name="gender_update" required>
+              <option value="">Select</option>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+              <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="trait_update">Trait:</label>
+          <select class="form-control" id="trait_update" name="trait_update" required>
+              <option value="">Select</option>
+              <option value="User">User</option>
+              <option value="Admin">Admin</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+      </form>
+    </div>
+
+<!--Delete User -->
     <div class ="container" style="position: relative; left: -90px; top: 20px;">
       <div class="row">
         <div class="col-md-6">
@@ -71,9 +132,10 @@
         </div>
       </div>
     </div>
-    
+
+    <!--Create User -->
     <div class="container mt-5">
-      <h2 class="text-center mb-4">Sign Up</h2>
+      <h2 class="text-center mb-4">Create new User</h2>
       <form>
           <div class="form-group">
             <label for="firstName">First Name:</label>
@@ -109,7 +171,6 @@
                   <option value="other">Other</option>
               </select>
           </div>
-
           <div class="form-group">
               <label for="country">Country:</label>
               <input type="text" class="form-control" id="country" name="country" required>
@@ -333,6 +394,76 @@
               // Handle the error, display an error message, etc.
             });
         }
+        
+        //Update
+
+        const updateForm = document.getElementById('updateForm');
+        const userDropdownUpdate = document.getElementById('userDropdownUpdate');
+        
+        // Fetch user data for the dropdown
+        fetch('http://localhost:3000/users')
+          .then(response => response.json())
+          .then(data => {
+            // Extract the usernames from the user data
+            const usernames = data.map(user => user.username);
+        
+            // Populate the dropdown with usernames
+            usernames.forEach(username => {
+              const option = document.createElement('option');
+              option.value = username;
+              option.textContent = username;
+              userDropdownUpdate.appendChild(option);
+            });
+          })
+          .catch(error => {
+            console.error('Error fetching user data:', error);
+          });
+        
+        // Update functionality
+        updateForm.addEventListener('submit', event => {
+          event.preventDefault();
+        
+          const selectedUsername = userDropdownUpdate.value;
+          const firstName = document.getElementById('firstName_update').value;
+          const lastName = document.getElementById('lastName_update').value;
+          const country = document.getElementById('country_update').value;
+          const city = document.getElementById('city_update').value;
+          const address = document.getElementById('address_update').value;
+          const phone = document.getElementById('phone_update').value;
+          const gender = document.getElementById('gender_update').value;
+          const trait = document.getElementById('trait_update').value;
+        
+          // Prepare the updated user object
+          const updatedUser = {
+            firstName,
+            lastName,
+            gender,
+            country,
+            city,
+            address,
+            phone,
+            trait
+          };
+        
+          // Perform the update request
+          fetch(`http://localhost:3000/users/${selectedUsername}`, {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedUser)
+          })
+            .then(response => response.json())
+            .then(data => {
+              console.log('User updated successfully:', data);
+              // Clear the form fields
+              updateForm.reset();
+            })
+            .catch(error => {
+              console.error('Error updating user:', error);
+            });
+        });
+        
   </script>
     
 

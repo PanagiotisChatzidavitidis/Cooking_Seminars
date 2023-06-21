@@ -29,6 +29,10 @@ const SeminarSchema = mongoose.Schema(
     seminar_difficulty: {
       type: String,
       required: true
+    },
+    seminar_cost: {
+      type: Number,
+      required: true
     }
   },
   {
