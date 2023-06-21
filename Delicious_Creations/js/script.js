@@ -15,6 +15,11 @@ function confirmSignOut() {
   });
 
   
+  /* Sign in*/
+  document.addEventListener("DOMContentLoaded", function() {
+    var card = document.getElementById("card2");
+    card.classList.add("fade-in");
+  });
   
 
   

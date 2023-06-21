@@ -110,8 +110,23 @@ router.delete('/:userId', async (req, res) => {
   }
 });
 
+// POST (sign-in)
+router.post('/signin', async (req, res) => {
+  const { username, password } = req.body;
 
-
+  try {
+    const user = await User.findOne({ username: username, password: password });
+    if (user) {
+      // User found, authentication successful
+      res.status(200).json({ success: true, message: 'Authentication successful' });
+    } else {
+      // No user found, authentication failed
+      res.status(401).json({ success: false, message: 'Invalid username or password' });
+    }
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+});
 
 
 module.exports = router;

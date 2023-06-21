@@ -1,87 +1,66 @@
 <html>
 <head>
     <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style.css?v=<?php echo time(); ?>">
 
     <script src="../js/jquery-3.7.0.min.js"></script>
     <script src="../js/script.js"></script>
 </head>
 <body>
-    <!-- Return button -->
-    <button type="button" class="btn cancel" onclick="window.location.href = 'home.html';" style="position: relative; top: 20px; right: 20px;">Return</button>  
-    <!-- Login -->
-    <section class="vh-100 gradient-custom">
-        <div class="container py-5 h-100">
-            <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-                    <div class="card shadow-2-strong text-black" style="border-radius: 1rem;">
-                        <div class="card-body p-5 text-center">
-                            <div class="mb-md-5 mt-md-4 pb-5">
-                                <!-- Login heading -->
-                                <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-                                <p class="text-black-50 mb-5">Please enter your login and password!</p>
+  <div id="card2" class="card2 fade-in">
+    <h1>Sign In</h1>
+    <form id="signInForm">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div class="form-group">
+        <a href="#" id="forgotPassword">Forgot your password?</a>
+      </div>
+      <div class="form-group">
+        <p>Haven't created an account yet? <a href="#" id="signUpLink">Sign Up</a></p>
+      </div>
+      <button type="button" class="btn btn-primary" onclick="signIn()">Sign In</button>
+    </form>
+  </div>
 
-                                <!-- Email input field -->
-                                <div class="form-outline form-black mb-4">
-                                    <label class="form-label" for="email">Email</label>
-                                    <input type="email" id="email" class="form-control form-control-lg" />
-                                </div>
-
-                                <!-- Password input field -->
-                                <div class="form-outline form-black mb-4">
-                                    <label class="form-label" for="password">Password</label>
-                                    <input type="password" id="password" class="form-control form-control-lg" />
-                                </div>
-
-                                <!-- Forgot password link -->
-                                <p class="small mb-5 pb-lg-2"><a class="text-black-50" href="#!">Forgot password?</a></p>
-
-                                <!-- Sign in button -->
-                                <div class="mt-4 pt-2 d-flex justify-content-center">
-                                    <input class="btn btn-sign" style="position: relative; top: -50px;" type="submit" value="Sign in" onclick="signIn()" />
-                                </div>
-                            </div>
-
-                            <!-- Sign Up section -->
-                            <div style="position: relative; top: -100px;">
-                                <p class="mb-0">Don't have an account? <a href="sign_up.html" class="text-black-50 fw-bold">Sign Up</a></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        function signIn() {
-            // Get the values from the email and password input fields
-            var email = document.getElementById("email").value;
-            var password = document.getElementById("password").value;
-    
-            // Perform validation (e.g., check for empty fields)
-    
-            // Example validation: Check if the email and password are not empty
-            if (email === "" || password === "") {
-                alert("Please enter both email and password.");
-                return;
-            }
-    
-            // Perform further processing (e.g., making an AJAX request to a server)
-    
-            // Example: Simulate successful sign-in with a valid email and password
-            if (email === "example@example.com" && password === "password") {
-                // Clear the form inputs
-                document.getElementById("email").value = "";
-                document.getElementById("password").value = "";
-    
-                // Redirect to the home page or perform any other desired action
-                window.location.href = "user_home.html";
-            } else {
-                // Example: Display an error message for an invalid sign-in attempt
-                alert("Invalid email or password. Please try again.");
-            }
-        }
-    </script>
+  <script>
+    function signIn() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+  
+      const userData = {
+        username: username,
+        password: password
+      };
+  
+      fetch('http://localhost:3000/users/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      })
+        .then(response => {
+          if (response.ok) {
+            // Redirect to home.html
+            window.location.href = 'home.html';
+          } else {
+            // Handle authentication failure
+            console.log('Authentication failed');
+          }
+        })
+        .catch(error => {
+          console.error('Error signing in:', error);
+        });
+    }
+  </script>
+  
 </body>
+
+
 </html>
