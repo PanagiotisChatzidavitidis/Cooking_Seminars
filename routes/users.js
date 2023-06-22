@@ -1,8 +1,21 @@
 const express = require('express');
 const router = express.Router();
+const session = require('express-session');
 //const passport = require('passport');
 //const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
+
+// Configure session middleware
+router.use(session({
+  secret: 'your-secret-key', // Replace with your own secret key
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false, // Set to true if using HTTPS
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000, // Session expiry time (optional)
+  },
+}));
 
 // POST (create data)
 router.post('/', async (req, res) => {
@@ -123,7 +136,18 @@ router.post('/signin', async (req, res) => {
     const user = await User.findOne({ username: username, password: password });
     if (user) {
       // User found, authentication successful
-      res.status(200).json({ success: true, message: 'Authentication successful' });
+      req.session.user = user; // Save the user object in the session
+
+      // Display verification message in the terminal
+      console.log('User signed in:', user);
+
+      if (user.trait === 'User') {
+        res.status(200).json({ success: true, message: 'Authentication successful', redirect: 'user_home.html' });
+      } else if (user.trait === 'Admin') {
+        res.status(200).json({ success: true, message: 'Authentication successful', redirect: 'admin_home.html' });
+      } else {
+        res.status(200).json({ success: true, message: 'Authentication successful', redirect: 'home.html' });
+      }
     } else {
       // No user found, authentication failed
       res.status(401).json({ success: false, message: 'Invalid username or password' });
@@ -132,6 +156,25 @@ router.post('/signin', async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 });
+
+
+// POST (sign-out)
+router.post('/signout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      res.status(500).json({ success: false, message: 'Error destroying session' });
+    } else {
+      // Clear the session cookie from the client's browser
+      res.clearCookie('session'); // Replace 'session' with the actual name of your session cookie
+
+      console.log('Session destroyed'); // Log session destroyed in the terminal
+      res.status(200).json({ success: true, message: 'Session destroyed', redirect: 'home.html' });
+    }
+  });
+});
+
+
+
 
 
 module.exports = router;
