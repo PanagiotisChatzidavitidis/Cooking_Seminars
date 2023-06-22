@@ -47,16 +47,15 @@
     
     <!-- Card template -->
     <form id="joinForm" class="card" style="display: none;">
-      <img class="card-img-top" src="/images/class.png" alt="">
       <div class="card-body">
-        <h5 id= seminarName class="card-title"></h5>
+        <h5 id="seminarName" class="card-title"></h5>
         <p class="card-text"></p>
         <p class="card-text"></p>
         <p class="card-text"></p>
         <p class="card-text"></p>
         <p class="card-text"></p>
         <p class="card-text"></p>
-        <p id = seminarCost class="card-text"></p>
+        <p id="seminarCost" class="card-text"></p>
         <a href="payment.html" type="submit" class="btn btn-primary">Join</a>
       </div>
     </form>
@@ -77,7 +76,6 @@
               cardTemplate.style.display = 'block'; // Show the cloned card template
     
               // Set seminar data to the card elements
-              cardTemplate.querySelector('.card-img-top').src = seminar.image_url;
               cardTemplate.querySelector('.card-title').textContent = seminar.seminar_name;
               cardTemplate.querySelector('.card-text:nth-of-type(1)').textContent = 'Level: ' + seminar.seminar_difficulty;
               cardTemplate.querySelector('.card-text:nth-of-type(2)').textContent = 'Date start: ' + seminar.seminar_date_start;
