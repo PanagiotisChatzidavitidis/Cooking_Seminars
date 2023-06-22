@@ -33,14 +33,7 @@
                 <a class="nav-link" href="myprofile.html">My Profile</a>
               </li>
               
-              <li class="nav-item">
-                <a class="nav-link disabled" href="cooking_business.html" style="color: rgba(255, 255, 255, 0.395);">Job Opportunities</a>
-              </li>
             </ul>
-            <form class="d-flex" role="search" id="searchForm">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="searchInput">
-              <button class="btn btn-outline-success" type="submit" style="color: white; background-color: transparent; border-color: white;">Search</button>
-            </form>
           </div>
         </div>
     </nav>
@@ -53,20 +46,20 @@
     </div>
     
     <!-- Card template -->
-    <div class="card" style="display: none;">
-      <img class="card-img-top" src="..." alt="Card image cap">
+    <form id="joinForm" class="card" style="display: none;">
+      <img class="card-img-top" src="/images/class.png" alt="">
       <div class="card-body">
-        <h5 class="card-title"></h5>
+        <h5 id= seminarName class="card-title"></h5>
         <p class="card-text"></p>
         <p class="card-text"></p>
         <p class="card-text"></p>
         <p class="card-text"></p>
         <p class="card-text"></p>
         <p class="card-text"></p>
-        <p class="card-text"></p>
-        <a href="#" class="btn btn-primary">Join</a>
+        <p id = seminarCost class="card-text"></p>
+        <a href="payment.html" type="submit" class="btn btn-primary">Join</a>
       </div>
-    </div>
+    </form>
 
     <script>
       // Fetch seminar data
@@ -74,15 +67,15 @@
         .then(response => response.json())
         .then(data => {
           const seminarContainer = document.querySelector('.row');
-
+    
           // Create HTML elements to display seminar data
           const renderSeminars = (seminars) => {
             seminarContainer.innerHTML = ''; // Clear existing seminar data
-
+    
             seminars.forEach((seminar, index) => {
               const cardTemplate = document.querySelector('.card').cloneNode(true);
               cardTemplate.style.display = 'block'; // Show the cloned card template
-
+    
               // Set seminar data to the card elements
               cardTemplate.querySelector('.card-img-top').src = seminar.image_url;
               cardTemplate.querySelector('.card-title').textContent = seminar.seminar_name;
@@ -93,54 +86,48 @@
               cardTemplate.querySelector('.card-text:nth-of-type(5)').textContent = 'Duration: ' + seminar.seminar_duration + ' days';
               cardTemplate.querySelector('.card-text:nth-of-type(6)').textContent = 'Capacity: ' + seminar.seminar_capacity;
               cardTemplate.querySelector('.card-text:nth-of-type(7)').textContent = 'Cost: ' + seminar.seminar_cost;
-
+    
+              // Add event listener to the join button
+              const joinButton = cardTemplate.querySelector('.btn-primary');
+              joinButton.addEventListener('click', function(event) {
+                event.preventDefault();
+    
+                // Get the seminar title and cost
+                const seminarTitle = seminar.seminar_name;
+                const seminarCost = seminar.seminar_cost;
+                console.log(seminarTitle)
+                console.log(seminarCost)
+                // Store seminar title and cost in local storage
+                localStorage.setItem('seminar-title', seminarTitle);
+                localStorage.setItem('seminar-cost', seminarCost);
+    
+                // Navigate to the payment page
+                window.location.href = 'payment.html';
+              });
+    
               const col = document.createElement('div');
               col.classList.add('col-md-4', 'mb-4');
               col.appendChild(cardTemplate);
-
+    
               seminarContainer.appendChild(col); // Add the column to the seminar container
-
+    
               // Add a new row after every third seminar
               if ((index + 1) % 3 === 0) {
                 seminarContainer.appendChild(document.createElement('div'));
               }
             });
           };
-
+    
           renderSeminars(data); // Render all seminars initially
-
-          // Handle form submission (search)
-          const searchForm = document.getElementById('searchForm');
-          const searchInput = document.getElementById('searchInput');
-
-          searchForm.addEventListener('submit', (event) => {
-            event.preventDefault(); // Prevent the form from submitting
-
-            const searchTerm = searchInput.value.trim();
-
-            if (searchTerm !== '') {
-              const searchUrl = `http://localhost:3000/seminars/search?search=${encodeURIComponent(searchTerm)}`;
-
-              // Fetch search results based on the search term
-              fetch(searchUrl)
-                .then(response => response.json())
-                .then(searchResults => {
-                  renderSeminars(searchResults); // Render search results
-                })
-                .catch(error => {
-                  console.error('Error fetching search results:', error);
-                });
-            } else {
-              // If the search term is empty, render all seminars
-              renderSeminars(data);
-            }
-          });
         })
         .catch(error => {
           console.error('Error fetching seminar data:', error);
         });
     </script>
-
+    
+    
+    
+    
     <footer>
       <div class="container">
         <div class="text-center">
