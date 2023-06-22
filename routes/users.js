@@ -48,30 +48,6 @@ router.get('/:userId', async (req, res) => {
   }
 });
 
-// GET3 (search data)
-router.get('/search', async (req, res) => {
-  try {
-    const searchTerm = req.query.search; // Get the search term from the query parameters
-
-    // Construct a query to search for the term in relevant fields of the seminar collection
-    const query = {
-      $or: [
-        { seminar_name: { $regex: searchTerm, $options: 'i' } },
-        { seminar_date_start: { $regex: searchTerm, $options: 'i' } },
-        { seminar_date_end: { $regex: searchTerm, $options: 'i' } },
-        { seminar_description: { $regex: searchTerm, $options: 'i' } },
-        { seminar_duration: { $regex: searchTerm, $options: 'i' } },
-        { seminar_difficulty: { $regex: searchTerm, $options: 'i' } },
-      ],
-    };
-
-    const searchResults = await Seminar.find(query);
-    res.send(searchResults);
-  } catch (err) {
-    res.status(500).send({ message: err });
-  }
-});
-
 
 // PATCH (Update data by username)
 router.patch('/:username', async (req, res) => {

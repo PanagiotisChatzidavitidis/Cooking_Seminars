@@ -1,0 +1,42 @@
+
+<html>
+<head>
+    <title>Payment</title>
+    <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css?v=<?php echo time(); ?>">
+
+    <script src="../jquery-3.7.0.min.js"></script>
+    
+    <script type="text/javascript" src="jquery-3.7.0.min.js"></script>
+    <script src="../js/script.js"></script>
+
+    <!-- Include necessary CSS and JS files -->
+</head>
+<body>
+    <h1>Payment Page</h1>
+    <div>Seminar Title:<br><span id="seminar-title"></span></div>
+    <div>Seminar Cost:<br><span id="seminar-cost"></span></div>
+    <form id="paymentForm">
+        <div class="form-group">
+            <label for="quantity">Quantity:</label>
+            <select class="form-control" id="quantity" name="quantity" required>
+                <option value=1>1</option>
+                <option value=2>2</option>
+                <option value=3>3</option>
+                <option value=4>4</option>
+            </select>
+        </div>
+
+
+    </form>
+    <script>
+        const seminarTitle = localStorage.getItem('seminar-title');
+        const seminarCost = localStorage.getItem('seminar-cost');
+        console.log(seminarTitle)
+        console.log(seminarCost)
+        document.getElementById('seminar-title').textContent = seminarTitle;
+        document.getElementById('seminar-cost').textContent = seminarCost;
+     </script>
+
+</body>
+</html>

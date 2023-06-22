@@ -6,12 +6,14 @@ require('dotenv/config');
 const bodyParser = require('body-parser');
 const seminarRoute = require('./routes/seminars');
 const userRoute = require('./routes/users');
+const reservationRoute = require('./routes/reservations');
 const cors = require('cors');
 
 app.use(bodyParser.json());
 app.use(cors());
 app.use('/seminars', seminarRoute);
 app.use('/users', userRoute); // Add the user route
+app.use('/reservations', reservationRoute);
 
 app.get('/', (req, res) => {
   res.send('Homepage');
