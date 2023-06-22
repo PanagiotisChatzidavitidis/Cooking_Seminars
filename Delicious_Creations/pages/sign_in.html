@@ -53,6 +53,12 @@
     }
   })
   .then(data => {
+    // Get the seminar title and cost
+    console.log(seminarTitle)
+    console.log(seminarCost)
+    // Store seminar title and cost in local storage
+    localStorage.setItem('username', seminarTitle);
+    localStorage.setItem('seminar-cost', seminarCost);
     const redirect = data.redirect;
     window.location.href = redirect; // Redirect to the specified page
   })
