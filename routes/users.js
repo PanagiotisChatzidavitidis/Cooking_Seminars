@@ -158,9 +158,9 @@ router.post('/signout', (req, res) => {
     } else {
       // Clear the session cookie from the client's browser
       res.clearCookie('session'); // Replace 'session' with the actual name of your session cookie
-
       console.log('Session destroyed'); // Log session destroyed in the terminal
       res.status(200).json({ success: true, message: 'Session destroyed', redirect: 'home.html' });
+
     }
   });
 });
