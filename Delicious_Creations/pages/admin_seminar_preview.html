@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css?v=<?php echo time(); ?>">
+
+    <script src="../jquery-3.7.0.min.js"></script>
+    
+    <script type="text/javascript" src="jquery-3.7.0.min.js"></script>
+    <script src="../js/script.js"></script>
+
+</head>
+
+<body>
+    <header>
+        <img src="../images/CR_transparent.png" width="200">
+        <button class="btn btn-sign-out" onclick="location.href='home.html'">Sign Out</button>
+    </header>
+    </header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+  
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="admin_home.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="admin_seminar_preview.html">Seminar-Preview</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="admin_seminars.html">Seminars-Administration</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="user_administration.html">Users</a>
+              </li>
+            </ul>
+              <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit" style="color: white; background-color: transparent; border-color: white;">Search</button>
+              </form>
+            </div>
+          </div>
+        </nav>
+
+    
+    <div id="seminarContainer" class="container">
+      <div class="row justify-content-center">
+        <!-- Seminar data will be dynamically added here -->
+      </div>
+    </div>
+    
+    <!-- Card template -->
+    <div id="joinForm" class="card" style="display: none;">
+      <div class="card-body">
+        <h5 id="seminarName" class="card-title"></h5>
+        <p class="card-text"></p>
+        <p class="card-text"></p>
+        <p class="card-text"></p>
+        <p class="card-text"></p>
+        <p class="card-text"></p>
+        <p class="card-text"></p>
+        <p id="seminarCost" class="card-text"></p>
+      </div>
+    </div>
+
+    <script>
+      // Fetch seminar data
+      fetch('http://localhost:3000/seminars')
+        .then(response => response.json())
+        .then(data => {
+          const seminarContainer = document.querySelector('.row');
+    
+          // Create HTML elements to display seminar data
+          const renderSeminars = (seminars) => {
+            seminarContainer.innerHTML = ''; // Clear existing seminar data
+    
+            seminars.forEach((seminar, index) => {
+              const cardTemplate = document.querySelector('.card').cloneNode(true);
+              cardTemplate.style.display = 'block'; // Show the cloned card template
+    
+              // Set seminar data to the card elements
+              cardTemplate.querySelector('.card-title').textContent = seminar.seminar_name;
+              cardTemplate.querySelector('.card-text:nth-of-type(1)').textContent = 'Level: ' + seminar.seminar_difficulty;
+              cardTemplate.querySelector('.card-text:nth-of-type(2)').textContent = 'Date start: ' + seminar.seminar_date_start;
+              cardTemplate.querySelector('.card-text:nth-of-type(3)').textContent = 'Date end: ' + seminar.seminar_date_end;
+              cardTemplate.querySelector('.card-text:nth-of-type(4)').textContent = 'Description: ' + seminar.seminar_description;
+              cardTemplate.querySelector('.card-text:nth-of-type(5)').textContent = 'Duration: ' + seminar.seminar_duration + ' days';
+              cardTemplate.querySelector('.card-text:nth-of-type(6)').textContent = 'Capacity: ' + seminar.seminar_capacity;
+              cardTemplate.querySelector('.card-text:nth-of-type(7)').textContent = 'Cost: ' + seminar.seminar_cost;
+    
+              const col = document.createElement('div');
+              col.classList.add('col-md-4', 'mb-4');
+              col.appendChild(cardTemplate);
+    
+              seminarContainer.appendChild(col); // Add the column to the seminar container
+    
+              // Add a new row after every third seminar
+              if ((index + 1) % 3 === 0) {
+                seminarContainer.appendChild(document.createElement('div'));
+              }
+            });
+          };
+    
+          renderSeminars(data); // Render all seminars initially
+        })
+        .catch(error => {
+          console.error('Error fetching seminar data:', error);
+        });
+    </script>
+
+    
+    <!-- Session script -->
+    <script>
+      // Retrieve the 'current_user' value from session storage
+      const currentUser = sessionStorage.getItem('current_user');
+      const currentTrait = sessionStorage.getItem('current_trait');
+    
+      // Check if the 'current_user' value exists
+      if (currentUser) {
+        // The value exists, update the HTML element with the current user's username
+        const usernameElement = document.getElementById('currentUsername');
+        usernameElement.textContent = currentUser;
+      }
+
+      // Check if the 'current_trait' value exists
+      if (currentTrait) {
+        // The value exists, update the HTML element with the current user's trait
+        const traitElement = document.getElementById('currentTrait');
+        traitElement.textContent = currentTrait;
+      }
+    </script>
+    
+    
+    
+    <footer>
+      <div class="container">
+        <div class="text-center">
+            &copy; Delicious Creations 2023. All Rights Reserved.
+        </div>
+    </div>
+    </footer>
+</body>
+</html>

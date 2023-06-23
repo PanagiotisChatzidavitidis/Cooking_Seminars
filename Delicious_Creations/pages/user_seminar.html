@@ -24,14 +24,9 @@
                 <a class="nav-link" href="user_home.html">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="about_us.html">About us</a>
+                <a class="nav-link active" aria-current="page" href="user_seminar.html">Seminars</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="seminars.html">Seminars</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="myprofile.html">My Profile</a>
-              </li>
+
               
             </ul>
           </div>
@@ -122,7 +117,28 @@
           console.error('Error fetching seminar data:', error);
         });
     </script>
+
     
+    <!-- Session script -->
+    <script>
+      // Retrieve the 'current_user' value from session storage
+      const currentUser = sessionStorage.getItem('current_user');
+      const currentTrait = sessionStorage.getItem('current_trait');
+    
+      // Check if the 'current_user' value exists
+      if (currentUser) {
+        // The value exists, update the HTML element with the current user's username
+        const usernameElement = document.getElementById('currentUsername');
+        usernameElement.textContent = currentUser;
+      }
+
+      // Check if the 'current_trait' value exists
+      if (currentTrait) {
+        // The value exists, update the HTML element with the current user's trait
+        const traitElement = document.getElementById('currentTrait');
+        traitElement.textContent = currentTrait;
+      }
+    </script>
     
     
     
