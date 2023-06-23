@@ -133,6 +133,21 @@ router.post('/signin', async (req, res) => {
   }
 });
 
+//
+router.get('/trait/:username', async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username });
+    if (user) {
+      const trait = user.trait;
+      res.send({ trait });
+    } else {
+      res.status(404).send({ message: 'User not found' });
+    }
+  } catch (err) {
+    res.status(500).send({ message: err.message });
+  }
+});
+
 
 
 // POST (sign-out)

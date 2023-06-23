@@ -10,7 +10,8 @@ function confirmSignOut() {
     })
       .then(response => {
         if (response.ok) {
-          console.log('Session destroyed'); // Log session destroyed
+          sessionStorage.removeItem('current_user');
+          sessionStorage.removeItem('current_trait');
           window.location.href = "home.html"; // Replace with your actual sign-out URL
         } else {
           console.log('Error destroying session');
@@ -34,10 +35,10 @@ function confirmSignOut() {
 
   
   /* Sign in*/
-  document.addEventListener("DOMContentLoaded", function() {
-    var card = document.getElementById("card2");
-    card.classList.add("fade-in");
-  });
+ // document.addEventListener("DOMContentLoaded", function() {
+ //   var card = document.getElementById("card2");
+   // card.classList.add("fade-in");
+ // });
   
   
 

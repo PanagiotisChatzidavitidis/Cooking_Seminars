@@ -30,41 +30,60 @@
 
   <script>
     function signIn() {
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
 
-  const userData = {
-    username: username,
-    password: password
-  };
+      const userData = {
+        username: username,
+        password: password
+      };
 
-  fetch('http://localhost:3000/users/signin', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(userData)
-  })
-    .then(response => {
-      if (response.ok) {
-        // Extract the redirect value from the response JSON
-        return response.json();
-      } else {
-        // Handle authentication failure
-        console.log('Authentication failed');
-      }
-    })
-    .then(data => {
-      // Redirect to the specified page
-      window.location.href = data.redirect;
-    })
-    .catch(error => {
-      console.error('Error signing in:', error);
-    });
-}
+      fetch('http://localhost:3000/users/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      })
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error('Authentication failed');
+          }
+        })
+        .then(data => {
+          sessionStorage.setItem('current_user', username);
 
-      
-      </script>
+          const fetchTrait = fetch(`http://localhost:3000/users/trait/${username}`)
+            .then(response => {
+              if (response.ok) {
+                return response.json();
+              } else {
+                throw new Error('Error retrieving user trait');
+              }
+            });
+
+          Promise.all([fetchTrait])
+            .then(([traitData]) => {
+              const trait = traitData.trait;
+              sessionStorage.setItem('current_trait', trait);
+              console.log('Current Trait:', trait);
+
+              console.log('Current User:', sessionStorage.getItem('current_user'));
+              console.log('Current Trait:', sessionStorage.getItem('current_trait'));
+              // Redirect to the specified page
+              window.location.href = data.redirect;
+            })
+            .catch(error => {
+              console.error('Error retrieving user trait:', error);
+            });
+        })
+        .catch(error => {
+          console.error('Error signing in:', error);
+        });
+    }
+  </script>
       
 </body>
 

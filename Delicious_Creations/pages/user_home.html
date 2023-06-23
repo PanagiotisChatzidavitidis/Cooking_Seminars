@@ -5,9 +5,6 @@
 
     <script src="../js/jquery-3.7.0.min.js"></script>
     <script src="../js/script.js"></script>
-
-    <script type="text/javascript" scr="jquery-3.7.0.min.js"></script>
-
 </head>
 
 
@@ -15,7 +12,6 @@
     <header>
         <img src="../images/CR_transparent.png" width="200">
         <button class="btn btn-sign-out" onclick="confirmSignOut()">Sign Out</button>
-        <h1></h1>
         <button id="toggleDarkMode" class="btn btn-primary float-right">Dark Mode</button>
     </header>
 
@@ -48,7 +44,28 @@
           </div>
         </div>
       </nav>
-      <script>console.log('Session:', sessionStorage);</script>
+      <h5 id="currentUsername"></h5>
+      <h5 id="currentTrait"></h5>
+
+      <script>
+        // Retrieve the 'current_user' value from session storage
+        const currentUser = sessionStorage.getItem('current_user');
+        const currentTrait = sessionStorage.getItem('current_trait');
+      
+        // Check if the 'current_user' value exists
+        if (currentUser) {
+          // The value exists, update the HTML element with the current user's username
+          const usernameElement = document.getElementById('currentUsername');
+          usernameElement.textContent = currentUser;
+        }
+
+        // Check if the 'current_trait' value exists
+        if (currentTrait) {
+          // The value exists, update the HTML element with the current user's trait
+          const traitElement = document.getElementById('currentTrait');
+          traitElement.textContent = currentTrait;
+        }
+      </script>
     <footer>
       <div class="container">
         <div class="text-center">
