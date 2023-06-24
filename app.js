@@ -15,9 +15,10 @@ app.use('/seminars', seminarRoute);
 app.use('/users', userRoute); // Add the user route
 app.use('/reservations', reservationRoute);
 
-app.get('/', (req, res) => {
-  res.send('Homepage');
-});
+// Serve static files from the "public" directory
+app.use(express.static('Delicious_Creations/pages'));
+
+// Remove the existing app.get('/') route
 
 mongoose
   .connect(process.env.DB_CONNECTOR)

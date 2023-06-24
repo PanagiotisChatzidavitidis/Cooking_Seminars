@@ -28,7 +28,7 @@
               <a class="nav-link" href="admin_seminar_preview.html">Seminar-Preview</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="admin_seminars.html">Seminars-Administration</a>
+              <a class="nav-link" href="admin_seminars.html">Seminar-Administration</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="user_administration.html">Users</a>
@@ -42,27 +42,17 @@
         </div>
       </nav>
 
-      <h5 id="currentUsername"></h5>
-      <h5 id="currentTrait"></h5>
-
+      <div id="greetingMessage"></div>
 
       <script>
         // Retrieve the 'current_user' value from session storage
         const currentUser = sessionStorage.getItem('current_user');
-        const currentTrait = sessionStorage.getItem('current_trait');
       
         // Check if the 'current_user' value exists
         if (currentUser) {
-          // The value exists, update the HTML element with the current user's username
-          const usernameElement = document.getElementById('currentUsername');
-          usernameElement.textContent = currentUser;
-        }
-
-        // Check if the 'current_trait' value exists
-        if (currentTrait) {
-          // The value exists, update the HTML element with the current user's trait
-          const traitElement = document.getElementById('currentTrait');
-          traitElement.textContent = currentTrait;
+          // Add the welcoming message
+          const greetingMessage = document.getElementById('greetingMessage');
+          greetingMessage.innerHTML = `<h3>Welcome, ${currentUser}! Good to have you back.</h3>`;
         }
       </script>
 

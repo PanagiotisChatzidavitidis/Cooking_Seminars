@@ -104,7 +104,17 @@
         paymentForm.addEventListener('submit', function(event) {
           event.preventDefault();
           const finalPrice = calculateFinalPrice();
-          console.log('Final Price:', finalPrice);
+          const quantity = quantityInput.value;
+          const type = typeInput.value;
+          const selectedSeminar = seminarTitle;
+          const message = `You have selected ${selectedSeminar}, ${type} for ${quantity} people. Your total is ${finalPrice.toFixed(2)}€`;
+
+          localStorage.setItem('selected-seminar', selectedSeminar);
+          localStorage.setItem('selected-quantity', quantity);
+          localStorage.setItem('selected-type', type);
+          localStorage.setItem('selected-final-price', finalPrice.toFixed(2));
+
+          window.location.href = 'payment2.html';
         });
 
         typeInput.addEventListener('change', updateCostAndFinalPrice);

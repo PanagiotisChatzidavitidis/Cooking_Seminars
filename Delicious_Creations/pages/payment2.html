@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Confirmation</title>
+    <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <h1 style="text-align: center;">Payment Confirmation</h1>
+    <div>
+        <h4>Selected Seminar:</h4>
+        <p id="selected-seminar"></p>
+    </div>
+    <div>
+        <h4>Quantity:</h4>
+        <p id="selected-quantity"></p>
+    </div>
+    <div>
+        <h4>Seating Type:</h4>
+        <p id="selected-type"></p>
+    </div>
+    <div>
+        <h4>Total Price:</h4>
+        <p id="selected-final-price"></p>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <h4>Enter Your Card Number:</h4>
+                <input type="text" id="card-number" class="form-control" required>
+                <div id="card-number-error" class="text-danger"></div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <button type="submit" class="btn btn-primary" id="confirm-payment">Confirm Payment</button>
+    <script>
+        // Retrieve values from localStorage
+        const selectedSeminar = localStorage.getItem('selected-seminar');
+        const selectedQuantity = localStorage.getItem('selected-quantity');
+        const selectedType = localStorage.getItem('selected-type');
+        const selectedFinalPrice = localStorage.getItem('selected-final-price');
+
+        // Display the values on the page
+        document.getElementById('selected-seminar').textContent = selectedSeminar;
+        document.getElementById('selected-quantity').textContent = selectedQuantity;
+        document.getElementById('selected-type').textContent = selectedType;
+        document.getElementById('selected-final-price').textContent = selectedFinalPrice + '€';
+
+        // Handle form submission
+        const confirmPaymentButton = document.getElementById('confirm-payment');
+        confirmPaymentButton.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            // Retrieve card number value
+            const cardNumber = document.getElementById('card-number').value;
+
+            // Perform further processing or validation if needed
+            const cardNumberError = document.getElementById('card-number-error');
+
+            if (!isValidCardNumber(cardNumber)) {
+                cardNumberError.textContent = 'Please enter a valid 16-digit card number.';
+                return;
+            }
+
+            // Clear any previous error messages
+            cardNumberError.textContent = '';
+
+            // Submit the payment
+            submitPayment();
+        });
+
+        // Function to validate a 16-digit card number
+        function isValidCardNumber(cardNumber) {
+            const cardNumberPattern = /^\d{16}$/;
+            return cardNumberPattern.test(cardNumber);
+        }
+
+        // Function to submit the payment
+        function submitPayment() {
+            // Retrieve the reservation data
+            const username = sessionStorage.getItem('current_user');
+            const seminarName = localStorage.getItem('selected-seminar');
+            const finalCost = localStorage.getItem('selected-final-price');
+            const cardNumber = document.getElementById('card-number').value;
+            const Type = localStorage.getItem('selected-type');
+            const Quantity = localStorage.getItem('selected-quantity');
+        
+            // Create a reservation object
+            const reservationData = {
+            username: username,
+            seminarName: seminarName,
+            finalCost: finalCost,
+            cardNumber: cardNumber,
+            Type: Type,
+            Quantity: Quantity
+            };
+        
+            // Send the reservation data to the server
+            fetch('http://localhost:3000/reservations', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(reservationData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response from the server
+                console.log('Reservation created:', data);
+                // Display success message
+                alert('Successful payment!');
+                // Redirect to user_home.html
+                window.location.href = 'user_home.html';
+                // Add your code to handle the success response here
+            })
+            .catch(error => {
+                // Handle the error
+                console.error('Error creating reservation:', error);
+                // Add your code to handle the error here
+            });
+        }
+
+    </script>
+</body>
+</html>

@@ -15,10 +15,14 @@ const ReservationSchema = new mongoose.Schema(
       required: true,
     },
     cardNumber: {
-      type: Number,
+      type: String,
       required: true,
     },
-    cardType: {
+    Type: {
+      type: String,
+      required: true,
+    },
+    Quantity: {
       type: String,
       required: true,
     }

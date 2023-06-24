@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
@@ -6,7 +7,6 @@
     <script src="../js/jquery-3.7.0.min.js"></script>
     <script src="../js/script.js"></script>
 </head>
-
 
 <body>
     <header>
@@ -34,28 +34,53 @@
           </div>
         </div>
       </nav>
-      <h5 id="currentUsername"></h5>
-      <h5 id="currentTrait"></h5>
+      <div id="greetingMessage"></div>
+
+      <h1>Your History</h1>
+      <div id="reservationsList"></div>
 
       <script>
         // Retrieve the 'current_user' value from session storage
         const currentUser = sessionStorage.getItem('current_user');
-        const currentTrait = sessionStorage.getItem('current_trait');
       
         // Check if the 'current_user' value exists
         if (currentUser) {
-          // The value exists, update the HTML element with the current user's username
-          const usernameElement = document.getElementById('currentUsername');
-          usernameElement.textContent = currentUser;
+          // Add the greeting message
+          const greetingMessage = document.getElementById('greetingMessage');
+          greetingMessage.innerHTML = `<h3>Welcome, ${currentUser}! Good to have you back.</h3>`;
         }
 
-        // Check if the 'current_trait' value exists
-        if (currentTrait) {
-          // The value exists, update the HTML element with the current user's trait
-          const traitElement = document.getElementById('currentTrait');
-          traitElement.textContent = currentTrait;
-        }
+        // Fetch reservations based on the current user
+        fetch('http://localhost:3000/reservations/' + currentUser)
+          .then(response => response.json())
+          .then(data => {
+            // Process the reservations data and display it
+            const reservationsList = document.getElementById('reservationsList');
+
+            if (data.length === 0) {
+              reservationsList.innerHTML = '<p>No reservations found.</p>';
+            } else {
+              const reservationsHTML = data.map(reservation => {
+                return `
+                  <div>
+                    <h4>Reservation ID: ${reservation._id}</h4>
+                    <p>Seminar Name: ${reservation.seminarName}</p>
+                    <p>Final Cost: ${reservation.finalCost}</p>
+                    <p>Seating Type: ${reservation.Type}</p>
+                    <p>Quantity: ${reservation.Quantity}</p>
+                  </div>
+                  <hr>
+                `;
+              }).join('');
+
+              reservationsList.innerHTML = reservationsHTML;
+            }
+          })
+          .catch(error => {
+            console.error('Error retrieving reservations:', error);
+          });
       </script>
+
     <footer>
       <div class="container">
         <div class="text-center">
