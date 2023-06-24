@@ -5,7 +5,7 @@ const Reservation = require('../models/Reservation');
 // POST (create reservation)
 router.post('/', async (req, res) => {
   // Extract the necessary data from the request body
-  const { username, seminarName, finalCost, cardNumber } = req.body;
+  const { username, seminarName, finalCost, cardNumber, cardType } = req.body;
 
   // Create a new reservation object
   const reservationData = new Reservation({
@@ -13,6 +13,7 @@ router.post('/', async (req, res) => {
     seminarName: seminarName,
     finalCost: finalCost,
     cardNumber: cardNumber,
+    cardType: cardType,
   });
 
   try {

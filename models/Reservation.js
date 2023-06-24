@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const reservationSchema = new mongoose.Schema(
+const ReservationSchema = new mongoose.Schema(
   {
     username: {
       type: String,
@@ -17,11 +17,15 @@ const reservationSchema = new mongoose.Schema(
     cardNumber: {
       type: Number,
       required: true,
+    },
+    cardType: {
+      type: String,
+      required: true,
     }
   },
   { timestamps: true, versionKey: false },
 );
 
-const Reservation = mongoose.model('Reservation', reservationSchema);
 
-module.exports = Reservation;
+
+module.exports = mongoose.model('reservations', ReservationSchema);

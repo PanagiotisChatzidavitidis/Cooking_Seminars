@@ -12,7 +12,7 @@ function confirmSignOut() {
         if (response.ok) {
           sessionStorage.removeItem('current_user');
           sessionStorage.removeItem('current_trait');
-          window.location.href = "home.html"; // Replace with your actual sign-out URL
+          window.location.href = "home.html"; 
         } else {
           console.log('Error destroying session');
         }
