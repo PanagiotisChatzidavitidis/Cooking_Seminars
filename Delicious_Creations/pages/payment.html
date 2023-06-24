@@ -1,19 +1,17 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Payment</title>
     <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="../css/style.css?v=<?php echo time(); ?>">
-
     <script src="../jquery-3.7.0.min.js"></script>
-    
-    <script type="text/javascript" src="jquery-3.7.0.min.js"></script>
     <script src="../js/script.js"></script>
-
-    
+</head>
 <body>
-    <h1>Payment Page</h1>
+    <h1 style="text-align: center;">Payment Page</h1>
     <div>Seminar Selected: <br><span id="seminar-title"></span></div>
-    <div>Regular Cost: <br><span id="seminar-cost"></span></div>
+    <div>Seminar Cost: <br><span id="seminar-cost"></span></div>
+    <h4 style="text-align: center;">Please select the number of seminars and type</h4>
     <form id="paymentForm">
         <div class="row">
             <div class="col-md-6">
@@ -38,15 +36,79 @@
                 </div>
             </div>
         </div>
+        <div>Final Price: <span id="final-price"></span></div>
         <button type="submit" class="btn btn-primary">Proceed to Payment</button>
     </form>
     <script>
         const seminarTitle = localStorage.getItem('seminar-title');
-        const seminarCost = localStorage.getItem('seminar-cost');
-        console.log(seminarTitle);
-        console.log(seminarCost);
-        document.getElementById('seminar-title').textContent = seminarTitle;
-        document.getElementById('seminar-cost').textContent = seminarCost;
-     </script>
+        let seminarCost = parseFloat(localStorage.getItem('seminar-cost'));
+        let regularCost = seminarCost;
+
+        const seminarTitleElement = document.getElementById('seminar-title');
+        const seminarCostElement = document.getElementById('seminar-cost');
+        const finalPriceElement = document.getElementById('final-price');
+        const paymentForm = document.getElementById('paymentForm');
+        const quantityInput = document.getElementById('quantity');
+        const typeInput = document.getElementById('type');
+
+        seminarTitleElement.textContent = seminarTitle;
+        seminarCostElement.textContent = regularCost.toFixed(2) + '€';
+
+        const calculateFinalPrice = () => {
+          const quantity = parseInt(quantityInput.value);
+          const seatingType = typeInput.value;
+          let finalPrice = seminarCost;
+
+          if (seatingType === 'Front Row Seating') {
+            finalPrice += 30;
+          } else if (seatingType === 'VIP Seating') {
+            finalPrice += 90;
+          }
+
+          // Apply discounts based on quantity
+          if (quantity === 2) {
+            finalPrice *= 0.95; // 5% discount
+          } else if (quantity === 3) {
+            finalPrice *= 0.9; // 10% discount
+          } else if (quantity === 4) {
+            finalPrice *= 0.85; // 15% discount
+          }
+
+          return finalPrice * quantity;
+        };
+
+        const updateCostAndFinalPrice = () => {
+          regularCost = seminarCost;
+          const seatingType = typeInput.value;
+
+          if (seatingType === 'Front Row Seating') {
+            regularCost += 30;
+          } else if (seatingType === 'VIP Seating') {
+            regularCost += 90;
+          }
+
+          seminarCostElement.textContent = regularCost.toFixed(2) + '€';
+          updateFinalPrice();
+        };
+
+        const updateFinalPrice = () => {
+          const finalPrice = calculateFinalPrice();
+          finalPriceElement.textContent = finalPrice.toFixed(2) + '€';
+        };
+
+        // Initialize final price with seminar cost
+        updateFinalPrice();
+
+        paymentForm.addEventListener('change', updateFinalPrice);
+
+        paymentForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+          const finalPrice = calculateFinalPrice();
+          console.log('Final Price:', finalPrice);
+        });
+
+        typeInput.addEventListener('change', updateCostAndFinalPrice);
+        quantityInput.addEventListener('change', updateFinalPrice);
+    </script>
 </body>
 </html>

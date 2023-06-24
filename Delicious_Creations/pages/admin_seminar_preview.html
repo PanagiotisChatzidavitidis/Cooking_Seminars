@@ -82,12 +82,19 @@
               // Set seminar data to the card elements
               cardTemplate.querySelector('.card-title').textContent = seminar.seminar_name;
               cardTemplate.querySelector('.card-text:nth-of-type(1)').textContent = 'Level: ' + seminar.seminar_difficulty;
-              cardTemplate.querySelector('.card-text:nth-of-type(2)').textContent = 'Date start: ' + seminar.seminar_date_start;
-              cardTemplate.querySelector('.card-text:nth-of-type(3)').textContent = 'Date end: ' + seminar.seminar_date_end;
+    
+              // Extract the date portion (YY-MM-DD) from the start date
+              const startDate = seminar.seminar_date_start.slice(0, 10);
+              cardTemplate.querySelector('.card-text:nth-of-type(2)').textContent = 'Date start: ' + startDate;
+    
+              // Extract the date portion (YY-MM-DD) from the end date
+              const endDate = seminar.seminar_date_end.slice(0, 10);
+              cardTemplate.querySelector('.card-text:nth-of-type(3)').textContent = 'Date end: ' + endDate;
+    
               cardTemplate.querySelector('.card-text:nth-of-type(4)').textContent = 'Description: ' + seminar.seminar_description;
               cardTemplate.querySelector('.card-text:nth-of-type(5)').textContent = 'Duration: ' + seminar.seminar_duration + ' days';
               cardTemplate.querySelector('.card-text:nth-of-type(6)').textContent = 'Capacity: ' + seminar.seminar_capacity;
-              cardTemplate.querySelector('.card-text:nth-of-type(7)').textContent = 'Cost: ' + seminar.seminar_cost;
+              cardTemplate.querySelector('.card-text:nth-of-type(7)').textContent = 'Cost: ' + seminar.seminar_cost + '€';
     
               const col = document.createElement('div');
               col.classList.add('col-md-4', 'mb-4');
@@ -108,6 +115,7 @@
           console.error('Error fetching seminar data:', error);
         });
     </script>
+    
 
     
     <!-- Session script -->
