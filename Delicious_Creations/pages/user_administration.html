@@ -254,7 +254,7 @@
           const userContainer = document.querySelector('.row');
           let usersData = data; // Store the original user data
     
-          // Create HTML elements to display user data in a table
+          // Create elements to display user data in a table
           const table = document.createElement('table');
           table.classList.add('table', 'table-striped', 'wider-table');
     
@@ -429,12 +429,9 @@
             .then(response => response.json())
             .then(data => {
               console.log('User created:', data);
-              // You can perform additional actions after creating the user
-              // For example, redirect to a success page or perform login
             })
             .catch(error => {
               console.error('Error creating user:', error);
-              // Handle the error, display an error message, etc.
             });
         }
         

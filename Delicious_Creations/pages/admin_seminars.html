@@ -225,12 +225,9 @@
           .then(response => response.json())
           .then(data => {
             console.log('Seminar created:', data);
-            // You can perform additional actions after creating the seminar
-            // For example, redirect to a success page or update the seminar list
           })
           .catch(error => {
             console.error('Error creating seminar:', error);
-            // Handle the error, display an error message, etc.
           });
       }
 
@@ -277,9 +274,6 @@
             .then(response => response.json())
             .then(data => {
               alert('Seminar deleted successfully.');
-
-              // Perform any additional actions after deleting the seminar
-              // For example, update the seminar list or display a success message
             })
             .catch(error => {
               console.error('Error deleting seminar:', error);
@@ -311,8 +305,6 @@
       }
 
       //UPDATE
-      
-
       const updateButton = document.getElementById('updateButton');
       const seminarDropdown_update = document.getElementById('seminarDropdown_update');
 
@@ -324,7 +316,6 @@
         }
 
         // Retrieve the updated values
-        //const seminarNameUpdate = document.getElementById('seminar_name_update').value;
         const startDateUpdate = document.getElementById('seminar_date_start_update').value;
         const endDateUpdate = document.getElementById('seminar_date_end_update').value;
         const descriptionUpdate = document.getElementById('seminar_description_update').value;
@@ -333,7 +324,6 @@
         const costUpdate = document.getElementById('seminar_cost_update').value;
 
         const seminarData = {
-          //seminar_name: seminarNameUpdate,
           seminar_date_start: startDateUpdate,
           seminar_date_end: endDateUpdate,
           seminar_description: descriptionUpdate,
@@ -359,9 +349,6 @@
             });
         }
       });
-
-            
-      
 
       // Fetch seminars and display them in the dropdown for delete
       fetchSeminarsdelete();

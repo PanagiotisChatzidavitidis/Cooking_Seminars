@@ -12,18 +12,18 @@
       .container {
         display: flex;
         justify-content: center;
-        margin: 25 200px; /* Add left and right margin */
+        margin: 25 200px; 
       }
     
       .card {
-        margin: 20px; /* Increase the margin to create more space between cards */
-        flex: 1 1 calc(50% - 40px); /* Adjusted flex value for two cards per row */
+        margin: 20px; 
+        flex: 1 1 calc(50% - 40px); 
       }
     
       .row {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between; /* Adjust the spacing between cards */
+        justify-content: space-between; 
       }
     </style>
 
@@ -64,7 +64,7 @@
     
         <div id="seminarContainer" class="container">
           <div class="row justify-content-center">
-            <!-- Seminar data will be dynamically added here -->
+            <!-- Automata seminars -->
           </div>
         </div>
         
@@ -89,7 +89,7 @@
         .then(data => {
           const seminarContainer = document.querySelector('.row');
     
-          // Create HTML elements to display seminar data
+          // Create elements to display seminar data
           const renderSeminars = (seminars) => {
             seminarContainer.innerHTML = ''; // Clear existing seminar data
     
@@ -108,10 +108,10 @@
               cardTemplate.querySelector('.card-text:nth-of-type(7)').textContent = 'Cost:' + seminar.seminar_cost + '€';
     
               const col = document.createElement('div');
-              col.classList.add('col-md-6', 'mb-4'); // Adjusted classes for column width
+              col.classList.add('col-md-6', 'mb-4'); 
               col.appendChild(cardTemplate);
     
-              seminarContainer.appendChild(col); // Add the column to the seminar container
+              seminarContainer.appendChild(col);
     
               // Add a new row after every second seminar
               if ((index + 1) % 2 === 0) {
@@ -129,7 +129,7 @@
             return `${year}-${month}-${day}`;
           };
     
-          renderSeminars(data); // Render all seminars initially
+          renderSeminars(data); // Render all seminars
         })
         .catch(error => {
           console.error('Error fetching seminar data:', error);

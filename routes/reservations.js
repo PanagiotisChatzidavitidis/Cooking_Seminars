@@ -4,7 +4,6 @@ const Reservation = require('../models/Reservation');
 
 // POST (create reservation)
 router.post('/', async (req, res) => {
-  // Extract the necessary data from the request body
   const { username, seminarName, finalCost, cardNumber, Type, Quantity } = req.body;
   const censoredCardNumber = censorCardNumber(cardNumber);
 

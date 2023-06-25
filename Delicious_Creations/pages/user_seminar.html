@@ -12,19 +12,19 @@
       .container {
         display: flex;
         justify-content: center;
-        margin: 25px auto; /* Adjusted margin to center the container */
+        margin: 25px auto; 
       }
     
       .card {
-        margin: 20px; /* Increase the margin to create more space between cards */
-        flex: 0 0 300px; /* Adjusted flex value for card width */
-        height: 760px; /* Increase the height by 20 pixels */
+        margin: 20px; 
+        flex: 0 0 300px; 
+        height: 760px;
       }
     
       .row {
         display: flex;
         flex-wrap: wrap;
-        justify-content: center; /* Align cards in the center */
+        justify-content: center; 
       }
     </style>
    
@@ -56,7 +56,7 @@
     
     <div id="seminarContainer" class="container">
       <div class="row justify-content-center">
-        <!-- Seminar data will be dynamically added here -->
+        <!-- Seminar data -->
       </div>
     </div>
     
@@ -82,7 +82,7 @@
         .then(data => {
           const seminarContainer = document.querySelector('.row');
     
-          // Create HTML elements to display seminar data
+          // Create elements to display seminar data
           const renderSeminars = (seminars) => {
             seminarContainer.innerHTML = ''; // Clear existing seminar data
     
@@ -118,12 +118,12 @@
               });
     
               const col = document.createElement('div');
-              col.classList.add('col-md-6', 'mb-4'); // Adjusted classes for column width
+              col.classList.add('col-md-6', 'mb-4');
               col.appendChild(cardTemplate);
     
               seminarContainer.appendChild(col); // Add the column to the seminar container
     
-              // Add a new row after every third seminar
+              // Add a new row after every second seminar
               if ((index + 1) % 2 === 0) {
                 seminarContainer.appendChild(document.createElement('div'));
               }

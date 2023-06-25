@@ -1,19 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const session = require('express-session');
-//const passport = require('passport');
-//const LocalStrategy = require('passport-local').Strategy;
+
 const User = require('../models/User');
 
 // Configure session middleware
 router.use(session({
-  secret: 'your-secret-key', // Replace with your own secret key
+  secret: 'your-secret-key',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false, // Set to true if using HTTPS
+    secure: false, 
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000, // Session expiry time (optional)
+    maxAge: 24 * 60 * 60 * 1000, 
   },
 }));
 
@@ -157,7 +156,7 @@ router.post('/signout', (req, res) => {
       res.status(500).json({ success: false, message: 'Error destroying session' });
     } else {
       // Clear the session cookie from the client's browser
-      res.clearCookie('session'); // Replace 'session' with the actual name of your session cookie
+      res.clearCookie('session');
       console.log('Session destroyed'); // Log session destroyed in the terminal
       res.status(200).json({ success: true, message: 'Session destroyed', redirect: 'home.html' });
 
