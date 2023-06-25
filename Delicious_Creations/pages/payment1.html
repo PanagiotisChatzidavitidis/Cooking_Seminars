@@ -7,7 +7,9 @@
     <script src="../jquery-3.7.0.min.js"></script>
     <script src="../js/script.js"></script>
 </head>
+<button onclick="returnHome()" class="btn btn-sign-out">Return</button>
 <body>
+  <div style="position: relative; top: 40px;">
     <h1 style="text-align: center;">Payment Page</h1>
     <div>Seminar Selected: <br><span id="seminar-title"></span></div>
     <div>Seminar Cost: <br><span id="seminar-cost"></span></div>
@@ -37,9 +39,13 @@
             </div>
         </div>
         <div>Final Price: <span id="final-price"></span></div>
-        <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+        <button type="submit" class="btn btn-primary btn-sign">Proceed to Payment</button>
     </form>
+  </div>
     <script>
+      function returnHome() {
+        window.location.href = "user_home.html";
+      }
         const seminarTitle = localStorage.getItem('seminar-title');
         let seminarCost = parseFloat(localStorage.getItem('seminar-cost'));
         let regularCost = seminarCost;

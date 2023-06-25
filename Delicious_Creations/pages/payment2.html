@@ -5,36 +5,42 @@
     <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="../css/style.css">
 </head>
+<button onclick="returnHome()" class="btn btn-sign-out">Return</button>
 <body>
-    <h1 style="text-align: center;">Payment Confirmation</h1>
-    <div>
-        <h4>Selected Seminar:</h4>
-        <p id="selected-seminar"></p>
-    </div>
-    <div>
-        <h4>Quantity:</h4>
-        <p id="selected-quantity"></p>
-    </div>
-    <div>
-        <h4>Seating Type:</h4>
-        <p id="selected-type"></p>
-    </div>
-    <div>
-        <h4>Total Price:</h4>
-        <p id="selected-final-price"></p>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <h4>Enter Your Card Number:</h4>
-                <input type="text" id="card-number" class="form-control" required>
-                <div id="card-number-error" class="text-danger"></div>
+    <div style="position: relative; top: 40px;">
+        <h1 style="text-align: center;">Payment Confirmation</h1>
+        <div>
+            <h4>Selected Seminar:</h4>
+            <p id="selected-seminar"></p>
+        </div>
+        <div>
+            <h4>Quantity:</h4>
+            <p id="selected-quantity"></p>
+        </div>
+        <div>
+            <h4>Seating Type:</h4>
+            <p id="selected-type"></p>
+        </div>
+        <div>
+            <h4>Total Price:</h4>
+            <p id="selected-final-price"></p>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <h4>Enter Your Card Number:</h4>
+                    <input type="text" id="card-number" class="form-control" required>
+                    <div id="card-number-error" class="text-danger"></div>
+                </div>
             </div>
         </div>
+        <br><br>
+        <button type="submit" class="btn btn-primary btn-sign" id="confirm-payment">Confirm Payment</button>
     </div>
-    <br><br>
-    <button type="submit" class="btn btn-primary" id="confirm-payment">Confirm Payment</button>
     <script>
+        function returnHome() {
+            window.location.href = "user_home.html";
+          }
         // Retrieve values from localStorage
         const selectedSeminar = localStorage.getItem('selected-seminar');
         const selectedQuantity = localStorage.getItem('selected-quantity');

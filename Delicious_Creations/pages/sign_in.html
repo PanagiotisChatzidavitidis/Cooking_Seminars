@@ -7,6 +7,7 @@
     <script src="../js/script.js"></script>
 </head>
 <body>
+  <button type="button" class="btn cancel btn-sign-out" onclick="window.location.href = 'home.html';" style="position: relative; top: 20px; right: 20px;">Return</button>
   <div id="card2" class="card2 fade-in">
     <h1>Sign In</h1>
     <form id="signInForm">
@@ -22,7 +23,7 @@
         <a href="#" id="forgotPassword">Forgot your password?</a>
       </div>
       <div class="form-group">
-        <p>Haven't created an account yet? <a href="#" id="signUpLink">Sign Up</a></p>
+        <p>Haven't created an account yet? <a href="sign_up.html" id="signUpLink">Sign Up</a></p>
       </div>
       <button type="button" class="btn btn-primary" onclick="signIn()">Sign In</button>
     </form>
