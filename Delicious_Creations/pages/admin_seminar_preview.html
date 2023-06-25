@@ -8,6 +8,24 @@
     
     <script type="text/javascript" src="jquery-3.7.0.min.js"></script>
     <script src="../js/script.js"></script>
+    <style>
+      .container {
+        display: flex;
+        justify-content: center;
+        margin: 25 200px; /* Add left and right margin */
+      }
+    
+      .card {
+        margin: 20px; /* Increase the margin to create more space between cards */
+        flex: 1 1 calc(50% - 40px); /* Adjusted flex value for two cards per row */
+      }
+    
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between; /* Adjust the spacing between cards */
+      }
+    </style>
 
 </head>
 
@@ -44,27 +62,27 @@
         </nav>
 
     
-    <div id="seminarContainer" class="container">
-      <div class="row justify-content-center">
-        <!-- Seminar data will be dynamically added here -->
-      </div>
-    </div>
+        <div id="seminarContainer" class="container">
+          <div class="row justify-content-center">
+            <!-- Seminar data will be dynamically added here -->
+          </div>
+        </div>
+        
+        <!-- Card template -->
+        <div id="joinForm" class="card" style="display: none;">
+          <div class="card-body">
+            <h5 id="seminarName" class="card-title"></h5>
+            <p class="card-text"></p>
+            <p class="card-text"></p>
+            <p class="card-text"></p>
+            <p class="card-text"></p>
+            <p class="card-text"></p>
+            <p class="card-text"></p>
+            <p id="seminarCost" class="card-text"></p>
+          </div>
+        </div>
     
-    <!-- Card template -->
-    <div id="joinForm" class="card" style="display: none;">
-      <div class="card-body">
-        <h5 id="seminarName" class="card-title"></h5>
-        <p class="card-text"></p>
-        <p class="card-text"></p>
-        <p class="card-text"></p>
-        <p class="card-text"></p>
-        <p class="card-text"></p>
-        <p class="card-text"></p>
-        <p id="seminarCost" class="card-text"></p>
-      </div>
-    </div>
-
-    <script>
+       <script>
       // Fetch seminar data
       fetch('http://localhost:3000/seminars')
         .then(response => response.json())
@@ -82,31 +100,33 @@
               // Set seminar data to the card elements
               cardTemplate.querySelector('.card-title').textContent = seminar.seminar_name;
               cardTemplate.querySelector('.card-text:nth-of-type(1)').textContent = 'Level: ' + seminar.seminar_difficulty;
-    
-              // Extract the date portion (YY-MM-DD) from the start date
-              const startDate = seminar.seminar_date_start.slice(0, 10);
-              cardTemplate.querySelector('.card-text:nth-of-type(2)').textContent = 'Date start: ' + startDate;
-    
-              // Extract the date portion (YY-MM-DD) from the end date
-              const endDate = seminar.seminar_date_end.slice(0, 10);
-              cardTemplate.querySelector('.card-text:nth-of-type(3)').textContent = 'Date end: ' + endDate;
-    
+              cardTemplate.querySelector('.card-text:nth-of-type(2)').textContent = 'Date start: ' + formatDateString(seminar.seminar_date_start);
+              cardTemplate.querySelector('.card-text:nth-of-type(3)').textContent = 'Date end: ' + formatDateString(seminar.seminar_date_end);
               cardTemplate.querySelector('.card-text:nth-of-type(4)').textContent = 'Description: ' + seminar.seminar_description;
               cardTemplate.querySelector('.card-text:nth-of-type(5)').textContent = 'Duration: ' + seminar.seminar_duration + ' days';
               cardTemplate.querySelector('.card-text:nth-of-type(6)').textContent = 'Capacity: ' + seminar.seminar_capacity;
-              cardTemplate.querySelector('.card-text:nth-of-type(7)').textContent = 'Cost: ' + seminar.seminar_cost + '€';
+              cardTemplate.querySelector('.card-text:nth-of-type(7)').textContent = 'Cost:' + seminar.seminar_cost + '€';
     
               const col = document.createElement('div');
-              col.classList.add('col-md-4', 'mb-4');
+              col.classList.add('col-md-6', 'mb-4'); // Adjusted classes for column width
               col.appendChild(cardTemplate);
     
               seminarContainer.appendChild(col); // Add the column to the seminar container
     
-              // Add a new row after every third seminar
-              if ((index + 1) % 3 === 0) {
+              // Add a new row after every second seminar
+              if ((index + 1) % 2 === 0) {
                 seminarContainer.appendChild(document.createElement('div'));
               }
             });
+          };
+    
+          // Format date string as yy-mm-dd
+          const formatDateString = (dateString) => {
+            const date = new Date(dateString);
+            const year = date.getFullYear().toString().slice(-2);
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
           };
     
           renderSeminars(data); // Render all seminars initially
@@ -116,37 +136,37 @@
         });
     </script>
     
-
+        
+        <!-- Session script -->
+        <script>
+          // Retrieve the 'current_user' value from session storage
+          const currentUser = sessionStorage.getItem('current_user');
+          const currentTrait = sessionStorage.getItem('current_trait');
+        
+          // Check if the 'current_user' value exists
+          if (currentUser) {
+            // The value exists, update the HTML element with the current user's username
+            const usernameElement = document.getElementById('currentUsername');
+            usernameElement.textContent = currentUser;
+          }
     
-    <!-- Session script -->
-    <script>
-      // Retrieve the 'current_user' value from session storage
-      const currentUser = sessionStorage.getItem('current_user');
-      const currentTrait = sessionStorage.getItem('current_trait');
-    
-      // Check if the 'current_user' value exists
-      if (currentUser) {
-        // The value exists, update the HTML element with the current user's username
-        const usernameElement = document.getElementById('currentUsername');
-        usernameElement.textContent = currentUser;
-      }
-
-      // Check if the 'current_trait' value exists
-      if (currentTrait) {
-        // The value exists, update the HTML element with the current user's trait
-        const traitElement = document.getElementById('currentTrait');
-        traitElement.textContent = currentTrait;
-      }
-    </script>
-    
-    
-    
-    <footer>
-      <div class="container">
-        <div class="text-center">
-            &copy; Delicious Creations 2023. All Rights Reserved.
+          // Check if the 'current_trait' value exists
+          if (currentTrait) {
+            // The value exists, update the HTML element with the current user's trait
+            const traitElement = document.getElementById('currentTrait');
+            traitElement.textContent = currentTrait;
+          }
+        </script>
+        
+        
+        
+        <footer>
+          <div class="container">
+            <div class="text-center">
+                &copy; Delicious Creations 2023. All Rights Reserved.
+            </div>
         </div>
-    </div>
-    </footer>
-</body>
-</html>
+        </footer>
+    </body>
+    </html>
+    

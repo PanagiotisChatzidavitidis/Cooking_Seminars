@@ -20,18 +20,21 @@ const Seminars = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Seminars</h1>
-      {seminars.length > 0 ? (
-        seminars.map(seminar => (
-          <SeminarCard key={seminar._id} seminar={seminar} />
-        ))
-      ) : (
-        <p>No seminars available at the moment.</p>
-      )}
+    <div className="container">
+      <div className="row justify-content-center">
+        {seminars.length > 0 ? (
+          seminars.map((seminar) => (
+            <div className="col-md-4 mb-4" key={seminar._id}>
+              <SeminarCard seminar={seminar} />
+            </div>
+          ))
+        ) : (
+          <p>No seminars available at the moment.</p>
+        )}
+      </div>
     </div>
   );
 };
 
-// Render the Seminars component inside the seminarCardsContainer element
-ReactDOM.render(<Seminars />, document.getElementById('seminarCardsContainer'));
+// Render the Seminars component inside the seminarContainer element
+ReactDOM.render(<Seminars />, document.getElementById('seminarContainer'));

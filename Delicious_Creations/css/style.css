@@ -14,7 +14,7 @@ body.dark-mode {
 
 
 .btn-sign-out {
-    background-color: rgb(221, 114, 81);
+    background-color: rgb(221, 114, 81) !important;
     color: white;
     padding: 5px 8px;
     float: right;
@@ -23,7 +23,7 @@ body.dark-mode {
 }
 
 .btn-sign {
-    background-color: rgb(203, 159, 101);
+    background-color: rgb(203, 159, 101) !important;
     color: white;
     padding: 5px 8px;
     float: right;
@@ -108,7 +108,7 @@ body.dark-mode {
 
 /*Wider table*/
 .wider-table {
-  width: 170%;
+  width: 280%;
 }
 
 .table-container {
@@ -298,3 +298,16 @@ img {vertical-align: middle;}
   background: #55ACEE;
   color: white;
 }
+
+.navbar-nav .nav-link.active,
+      .navbar-nav .nav-link:focus {
+        background-color: #74583a;
+      }
+
+
+      
+.hero-section .container {
+  background-color: rgb(232, 223, 210);
+}
+
+
