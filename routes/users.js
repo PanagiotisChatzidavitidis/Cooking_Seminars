@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
     lastName: req.body.lastName,
     username: req.body.username,
     email: req.body.email,
-    password: req.body.password,
+    password: maskPassword(req.body.password),
     gender: req.body.gender,
     country: req.body.country,
     city: req.body.city,
@@ -165,7 +165,11 @@ router.post('/signout', (req, res) => {
   });
 });
 
-
+// Function to mask the password
+function maskPassword(password) {
+  const maskedPassword = '*'.repeat(password.length);
+  return maskedPassword;
+}
 
 
 
