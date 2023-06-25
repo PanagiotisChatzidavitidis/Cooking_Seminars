@@ -109,8 +109,8 @@
                 .then(response => response.json())
                 .then(data => {
                     console.log('User created:', data);
-                    // You can perform additional actions after creating the user
-                    // For example, redirect to a success page or perform login
+                    window.location.href = 'home.html';
+                    
                 })
                 .catch(error => {
                     console.error('Error creating user:', error);
